@@ -1,0 +1,22 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+    public_member_api_docs: ignore
+
+linter:
+  rules:
+    public_member_api_docs: ignore
+    require_trailing_commas: true
+    trailing_commas: preserve
+    type_annotate_public_apis: true
+    always_specify_types: true
+    always_put_required_named_parameters_first: true
+    unnecessary_string_interpolations: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_brace_in_string_interps: true
+    avoid_unnecessary_containers: true
+    
+
+    

@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mortygram/config/theme/domain/entity/theme_entity.dart';
+import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
+
+class ThemeToggleButton extends StatefulWidget {
+  const ThemeToggleButton({super.key});
+
+  @override
+  State<ThemeToggleButton> createState() => _ThemeToggleButtonState();
+}
+
+class _ThemeToggleButtonState extends State<ThemeToggleButton> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (BuildContext context, ThemeState state) {
+        final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
+        return IconButton(
+          onPressed: () {
+            context.read<ThemeBloc>().add(ToggleThemeEvent(!isDarkMode));
+          },
+          icon: Icon(isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded),
+        );
+      },
+    );
+  }
+}

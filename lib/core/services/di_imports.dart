@@ -1,0 +1,24 @@
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mortygram/config/theme/data/datasource/local/theme_local_datasource.dart';
+import 'package:mortygram/config/theme/data/repository/theme_repo_impl.dart';
+import 'package:mortygram/config/theme/domain/repository/theme_repo.dart';
+import 'package:mortygram/config/theme/domain/usecase/get_theme_usecase.dart';
+import 'package:mortygram/config/theme/domain/usecase/set_theme_usecase.dart';
+import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
+import 'package:mortygram/core/services/interceptor/error_interceptor.dart';
+import 'package:mortygram/core/services/interceptor/retry_interceptor.dart';
+import 'package:mortygram/features/characters/data/datasource/remote/characters_remote_data_source.dart';
+import 'package:mortygram/features/characters/data/repos/characters_repo_impl.dart';
+import 'package:mortygram/features/characters/domain/repos/characters_repo.dart';
+import 'package:mortygram/features/characters/domain/usecases/fetch_characters.dart';
+import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
+import 'package:mortygram/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
+import 'package:mortygram/features/on_boarding/data/repos/on_boarding_repo_impl.dart';
+import 'package:mortygram/features/on_boarding/domain/repos/on_boarding_repo.dart';
+import 'package:mortygram/features/on_boarding/domain/usecases/cache_first_timer.dart';
+import 'package:mortygram/features/on_boarding/domain/usecases/check_first_timer.dart';
+import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+part 'injection_container.dart';

@@ -1,0 +1,4 @@
+enum ProceedingStatus {
+  proceeding,
+  completed,
+}
