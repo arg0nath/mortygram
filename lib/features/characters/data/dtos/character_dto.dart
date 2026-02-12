@@ -12,12 +12,14 @@ abstract class CharacterDto with _$CharacterDto {
   const factory CharacterDto({
     required int id,
     required String name,
-    required String imageUrl,
+    required String image,
     required String status,
     required String species,
     required String type,
     required String gender,
     required List<String> episode,
+    required List<String> location,
+    required List<String> origin,
   }) = _CharacterDto;
 
   factory CharacterDto.fromJson(DataMap json) => _$CharacterDtoFromJson(json);
@@ -26,12 +28,14 @@ abstract class CharacterDto with _$CharacterDto {
     return Character(
       id: id,
       name: name,
-      imageUrl: imageUrl,
+      image: image,
       status: status,
       species: species,
       type: type,
       episode: List.from(episode),
       gender: gender,
+      location: location,
+      origin: origin,
     );
   }
 
@@ -39,12 +43,14 @@ abstract class CharacterDto with _$CharacterDto {
     return CharacterDto(
       id: entity.id,
       name: entity.name,
-      imageUrl: entity.imageUrl,
+      image: entity.image,
       status: entity.status,
       species: entity.species,
       type: entity.type,
       episode: List.from(entity.episode),
       gender: entity.gender,
+      location: entity.location,
+      origin: entity.origin,
     );
   }
 }
