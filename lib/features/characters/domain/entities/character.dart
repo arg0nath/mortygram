@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:mortygram/features/locations/domain/entities/location.dart';
+import 'package:mortygram/features/origins/domain/entities/origin.dart';
 
 class Character extends Equatable {
   const Character({
@@ -17,8 +19,8 @@ class Character extends Equatable {
   final int id;
   final String name, image, status, species, type, gender;
   final List<String> episode;
-  final List<String> location;
-  final List<String> origin;
+  final Location location;
+  final Origin origin;
 
   @override
   List<Object?> get props => <Object?>[id, name, image];

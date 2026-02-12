@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mortygram/config/typedefs/typedefs.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
+import 'package:mortygram/features/locations/data/dtos/location_dto.dart';
+import 'package:mortygram/features/origins/data/dtos/origin_dto.dart';
 
 part 'character_dto.freezed.dart';
 part 'character_dto.g.dart';
@@ -18,8 +20,8 @@ abstract class CharacterDto with _$CharacterDto {
     required String type,
     required String gender,
     required List<String> episode,
-    required List<String> location,
-    required List<String> origin,
+    required LocationDto location,
+    required OriginDto origin,
   }) = _CharacterDto;
 
   factory CharacterDto.fromJson(DataMap json) => _$CharacterDtoFromJson(json);
@@ -34,8 +36,8 @@ abstract class CharacterDto with _$CharacterDto {
       type: type,
       episode: List.from(episode),
       gender: gender,
-      location: location,
-      origin: origin,
+      location: location.toEntity(),
+      origin: origin.toEntity(),
     );
   }
 
@@ -49,8 +51,8 @@ abstract class CharacterDto with _$CharacterDto {
       type: entity.type,
       episode: List.from(entity.episode),
       gender: entity.gender,
-      location: entity.location,
-      origin: entity.origin,
+      location: LocationDto.fromEntity(entity.location),
+      origin: OriginDto.fromEntity(entity.origin),
     );
   }
 }
