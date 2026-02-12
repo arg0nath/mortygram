@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_network_image.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
+import 'package:mortygram/features/characters/presentation/widgets/character_info_field.dart';
+import 'package:mortygram/features/characters/presentation/widgets/status_indicator.dart';
 
 class CharacterListTile extends StatelessWidget {
   const CharacterListTile({required this.character, required this.onTap, super.key});
@@ -12,31 +15,81 @@ class CharacterListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: .circular(8),
       child: Container(
-        // padding: const EdgeInsets.all(8.0),
-        height: 150,
-        child: Card(
-          child: Row(
-            children: [
-              //image
-              Expanded(
-                flex: 33,
+        height: 160,
+        decoration: BoxDecoration(
+          color: context.colorScheme.surfaceBright,
+          borderRadius: .circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Character Image
+            Expanded(
+              flex: 44,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                ),
                 child: CustomNetworkImage(imageUrl: character.image),
               ),
-              //info
-              Expanded(
-                flex: 66,
+            ),
+
+            // Character Info
+            Expanded(
+              flex: 66,
+              child: Padding(
+                padding: const .all(8.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: .spaceEvenly,
+                  crossAxisAlignment: .start,
                   children: [
-                    Expanded(flex: 10, child: Text(character.name)),
-                    Expanded(flex: 10, child: Text('${character.status} - ${character.species}')),
+                    // Name
+                    Text(
+                      character.name,
+                      maxLines: 2,
+                      overflow: .ellipsis,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    // Status and Species
+                    Row(
+                      spacing: 4,
+                      children: [
+                        StatusIndicator(status: character.status),
+                        Text(
+                          '${character.status} - ${character.species}',
+                          style: context.textTheme.labelSmall,
+                        ),
+                      ],
+                    ),
+
+                    // Last Known Location
+                    CharacterInfoField(
+                      title: 'Last known location:',
+                      value: character.location.name,
+                    ),
+
+                    // First Seen In
+                    CharacterInfoField(
+                      title: 'First seen in:',
+                      value: character.episode.isNotEmpty ? character.episode.first : 'Unknown',
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -39,9 +39,7 @@ class _CharactersPageState extends State<CharactersPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Rick & Morty')),
       body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<CharactersBloc>().add(const FetchCharactersEvent(page: 1, keyword: null));
-        },
+        onRefresh: () async => context.read<CharactersBloc>().add(const FetchCharactersEvent(page: 1, keyword: null)),
         child: BlocBuilder<CharactersBloc, CharactersState>(
           builder: (BuildContext context, CharactersState state) {
             return state.when(
@@ -54,9 +52,12 @@ class _CharactersPageState extends State<CharactersPage> {
                   itemCount: characters.length + (currentPage < lastPage ? 1 : 0),
                   itemBuilder: (BuildContext context, int index) {
                     if (index < characters.length) {
-                      return CharacterListTile(
-                        character: characters[index],
-                        onTap: () => context.goNamed(RouteName.characterDetailsPageName, pathParameters: <String, String>{'characterId': characters[index].id.toString()}),
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CharacterListTile(
+                          character: characters[index],
+                          onTap: () => context.goNamed(RouteName.characterDetailsPageName, pathParameters: <String, String>{'characterId': characters[index].id.toString()}),
+                        ),
                       );
                     } else {
                       // loading indicator at bottom
