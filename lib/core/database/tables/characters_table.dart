@@ -12,6 +12,7 @@ class CharactersTable extends Table {
 
   // Store episodes as JSON string
   TextColumn get episode => text()();
+  TextColumn get firstEpisodeName => text().nullable()();
   TextColumn get location => text()();
   TextColumn get origin => text()();
 

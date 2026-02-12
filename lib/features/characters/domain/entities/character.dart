@@ -14,11 +14,13 @@ class Character extends Equatable {
     required this.type,
     required this.episode,
     required this.gender,
+    this.firstEpisodeName,
   });
 
   final int id;
   final String name, image, status, species, type, gender;
   final List<String> episode;
+  final String? firstEpisodeName;
   final Location location;
   final Origin origin;
 

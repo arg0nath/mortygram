@@ -83,7 +83,7 @@ class CharacterListTile extends StatelessWidget {
                     // First Seen In
                     CharacterInfoField(
                       title: 'First seen in:',
-                      value: character.episode.isNotEmpty ? character.episode.first : 'Unknown',
+                      value: character.firstEpisodeName ?? 'Unknown',
                     ),
                   ],
                 ),

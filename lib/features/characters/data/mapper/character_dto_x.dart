@@ -19,6 +19,7 @@ extension CharacterDtoDriftMapper on CharacterDto {
       type: Value(type),
       gender: Value(gender),
       episode: Value(jsonEncode(episode)),
+      firstEpisodeName: Value(firstEpisodeName),
       location: Value(jsonEncode(location)),
       origin: Value(jsonEncode(origin)),
     );
@@ -36,6 +37,7 @@ extension CharacterDriftToDto on CharactersTableData {
       type: type,
       gender: gender,
       episode: List<String>.from(jsonDecode(episode) as List<dynamic>),
+      firstEpisodeName: firstEpisodeName,
       location: LocationDto.fromJson(jsonDecode(location) as DataMap),
       origin: OriginDto.fromJson(jsonDecode(origin) as DataMap),
     );

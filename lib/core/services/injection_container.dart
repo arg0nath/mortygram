@@ -35,7 +35,9 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => WatchCharacters(sl()))
     ..registerLazySingleton<CharactersRepo>(() => CharactersRepoImpl(sl(), sl()))
     ..registerLazySingleton<CharactersLocalDataSource>(() => CharactersLocalDataSourceImpl(sl<AppDatabase>()))
-    ..registerLazySingleton<CharactersRemoteDataSource>(() => CharactersRemoteDataSourceImpl(sl<Dio>()))
+    ..registerLazySingleton<CharactersRemoteDataSource>(() => CharactersRemoteDataSourceImpl(sl<Dio>(), sl<EpisodesRemoteDataSource>()))
+    // * Episodes
+    ..registerLazySingleton<EpisodesRemoteDataSource>(() => EpisodesRemoteDataSourceImpl(sl<Dio>()))
     // * General Services
     ..registerLazySingleton(() => prefs);
 
