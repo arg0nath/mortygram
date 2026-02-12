@@ -6,7 +6,7 @@ import 'package:mortygram/core/common/widgets/bottom_bar.dart';
 import 'package:mortygram/core/routes/route_helper.dart';
 import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/core/services/di_imports.dart';
-import 'package:mortygram/features/character_details/presentation/pages/character_details_page.dart';
+import 'package:mortygram/features/characters/presentation/pages/character_details_page.dart';
 import 'package:mortygram/features/characters/presentation/pages/characters_page.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:mortygram/features/on_boarding/presentation/pages/on_boarding_page.dart';

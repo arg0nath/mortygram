@@ -17,8 +17,6 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
   Future<List<CharacterDto>> fetchCharacters() async {
     final List<CharacterDto> characters = [];
 
-    await Future.delayed(const Duration(seconds: 1));
-
     final String url = 'https://${AppConst.baseApiUrl}/${AppConst.charactersApiUrl})}';
 
     try {
