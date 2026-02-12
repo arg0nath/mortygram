@@ -16,6 +16,7 @@ Future<void> injectionInit() async {
 
   dio.interceptors.addAll([ErrorInterceptor(), RetryInterceptor(dio)]);
   sl
+    ..registerLazySingleton<AppDatabase>(() => AppDatabase())
     ..registerLazySingleton<Dio>(() => dio)
     // * Theme
     ..registerFactory(() => ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()))
@@ -30,9 +31,10 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
     ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
     // * Characters
-    ..registerFactory(() => CharactersBloc(fetchCharacters: sl()))
-    ..registerLazySingleton(() => FetchCharacters(sl()))
-    ..registerLazySingleton<CharactersRepo>(() => CharactersRepoImpl(sl()))
+    ..registerFactory(() => CharactersBloc(watchCharacters: sl()))
+    ..registerLazySingleton(() => WatchCharacters(sl()))
+    ..registerLazySingleton<CharactersRepo>(() => CharactersRepoImpl(sl(), sl()))
+    ..registerLazySingleton<CharactersLocalDataSource>(() => CharactersLocalDataSourceImpl(sl<AppDatabase>()))
     ..registerLazySingleton<CharactersRemoteDataSource>(() => CharactersRemoteDataSourceImpl(sl<Dio>()))
     // * General Services
     ..registerLazySingleton(() => prefs);

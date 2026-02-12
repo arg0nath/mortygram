@@ -17,10 +17,10 @@ class AppConst {
   static const String appName = 'Mortygram';
 
   static const String baseApiUrl = 'rickandmortyapi.com/api';
-  static const String charactersApiUrl = '/character';
-  static const String characterDetailsApiUrl = '/character/{characterId}';
-  static const String characterEpisodesApiUrl = '/location';
-  static const String characterLocationsApiUrl = '/episode';
+  static const String charactersApiUrl = 'character';
+  static const String characterDetailsApiUrl = 'character/{characterId}';
+  static const String characterEpisodesApiUrl = 'location';
+  static const String characterLocationsApiUrl = 'episode';
 
   static const int retryMaxAttempts = 2;
   static const int apiStatusOk = 200;

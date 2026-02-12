@@ -12,8 +12,14 @@ class InitialCharactersEvent extends CharactersEvent {
 }
 
 class FetchCharactersEvent extends CharactersEvent {
-  const FetchCharactersEvent();
+  const FetchCharactersEvent({
+    required this.page,
+    required this.keyword,
+  });
+
+  final String? keyword;
+  final int page;
 
   @override
-  List<Object?> get props => <Object?>[];
+  List<Object?> get props => <Object?>[page, keyword];
 }
