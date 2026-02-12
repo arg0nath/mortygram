@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_error_widget.dart';
 import 'package:mortygram/core/common/widgets/custom_loading_indicator.dart';
 import 'package:mortygram/core/routes/route_names.dart';
@@ -37,7 +38,12 @@ class _CharactersPageState extends State<CharactersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Rick & Morty')),
+      appBar: AppBar(
+        title: Text(
+          'Mortygram',
+          style: context.textTheme.headlineSmall?.copyWith(fontWeight: .bold),
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: () async => context.read<CharactersBloc>().add(const FetchCharactersEvent(page: 1, keyword: null)),
         child: BlocBuilder<CharactersBloc, CharactersState>(
