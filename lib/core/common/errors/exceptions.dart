@@ -10,3 +10,18 @@ class CacheException extends Equatable implements Exception {
   @override
   List<Object?> get props => <Object?>[message, statusCode];
 }
+
+class ApiException extends Equatable implements Exception {
+  const ApiException({
+    required this.message,
+    required this.statusCode,
+    this.data,
+  });
+
+  final String message;
+  final String? data;
+  final int statusCode;
+
+  @override
+  List<Object?> get props => <Object?>[message, data, statusCode];
+}
