@@ -6,19 +6,23 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 import 'tables/characters_table.dart';
+import 'tables/pagination_metadata_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: <Type>[CharactersTable])
+@DriftDatabase(tables: <Type>[CharactersTable, PaginationMetadataTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
-  // WATCH (reactive)
-  Stream<List<CharactersTableData>> watchCharacters() {
-    return select(charactersTable).watch();
+  // GET characters by page (Future)
+  Future<List<CharactersTableData>> getCharactersByPage(int page) {
+    return (select(charactersTable)
+          ..where((tbl) => tbl.page.equals(page))
+          ..orderBy([(t) => OrderingTerm.asc(t.id)]))
+        .get();
   }
 
   // INSERT OR UPDATE
@@ -33,8 +37,21 @@ class AppDatabase extends _$AppDatabase {
     });
   }
 
+  // INSERT OR UPDATE pagination metadata
+  Future<void> insertPaginationMetadata(PaginationMetadataTableCompanion metadata) async {
+    await into(paginationMetadataTable).insertOnConflictUpdate(metadata);
+  }
+
+  // Get pagination metadata
+  Future<PaginationMetadataTableData?> getPaginationMetadata(String endpoint, int page) {
+    return (select(paginationMetadataTable)
+          ..where((tbl) => tbl.endpoint.equals(endpoint) & tbl.page.equals(page)))
+        .getSingleOrNull();
+  }
+
   // CLEAR
   Future<void> clearCharacters() => delete(charactersTable).go();
+  Future<void> clearPaginationMetadata() => delete(paginationMetadataTable).go();
 }
 
 LazyDatabase _openConnection() {
