@@ -6,7 +6,6 @@ import 'package:mortygram/core/common/widgets/bottom_bar.dart';
 import 'package:mortygram/core/routes/route_helper.dart';
 import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/core/services/di_imports.dart';
-import 'package:mortygram/features/characters/presentation/pages/character_details_page.dart';
 import 'package:mortygram/features/characters/presentation/pages/characters_page.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:mortygram/features/on_boarding/presentation/pages/on_boarding_page.dart';
@@ -53,12 +52,13 @@ final GoRouter router = GoRouter(
               name: RouteName.charactersPageName,
               builder: (BuildContext context, GoRouterState state) => const CharactersPage(),
               routes: <GoRoute>[
-                // * ---------- Character Details Page ----------
+                //TODO(details):create seperate feature in project struture
+                /*  // * ---------- Character Details Page ----------
                 customGoRoute(
                   path: '${RoutePath.characterDetailsPage}/:characterId',
                   name: RouteName.characterDetailsPageName,
                   builder: (BuildContext context, GoRouterState state) => CharacterDetailsPage(characterId: state.pathParameters['characterId']!),
-                ),
+                ), */
               ],
             ),
           ],
