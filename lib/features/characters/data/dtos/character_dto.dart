@@ -23,6 +23,7 @@ abstract class CharacterDto with _$CharacterDto {
     String? firstEpisodeName,
     required LocationDto location,
     required OriginDto origin,
+    @Default(1) @JsonKey(includeFromJson: false, includeToJson: false) int page, // Not from API
   }) = _CharacterDto;
 
   factory CharacterDto.fromJson(DataMap json) => _$CharacterDtoFromJson(json);

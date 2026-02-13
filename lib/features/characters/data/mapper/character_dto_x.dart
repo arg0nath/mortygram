@@ -12,6 +12,7 @@ extension CharacterDtoDriftMapper on CharacterDto {
   CharactersTableCompanion toCompanion() {
     return CharactersTableCompanion(
       id: Value(id),
+      page: Value(page),
       name: Value(name),
       image: Value(image),
       status: Value(status),
