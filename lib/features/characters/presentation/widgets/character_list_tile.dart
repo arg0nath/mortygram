@@ -17,7 +17,7 @@ class CharacterListTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: .circular(8),
       child: Container(
-        height: 160,
+        height: 150,
         decoration: BoxDecoration(
           color: context.colorScheme.surfaceBright,
           borderRadius: .circular(8),

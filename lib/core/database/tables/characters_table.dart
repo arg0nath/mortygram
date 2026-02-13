@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 class CharactersTable extends Table {
   IntColumn get id => integer()();
+  IntColumn get page => integer()(); // Track which page this character belongs to
 
   TextColumn get name => text()();
   TextColumn get image => text()();
