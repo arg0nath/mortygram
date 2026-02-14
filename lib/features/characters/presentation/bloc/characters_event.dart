@@ -23,3 +23,11 @@ class FetchCharactersEvent extends CharactersEvent {
   @override
   List<Object?> get props => <Object?>[page, keyword];
 }
+
+class LoadMoreCharactersEvent extends CharactersEvent {
+  const LoadMoreCharactersEvent();
+}
+
+class RefreshCharactersEvent extends CharactersEvent {
+  const RefreshCharactersEvent();
+}

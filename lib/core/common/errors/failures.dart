@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mortygram/core/common/errors/exceptions.dart';
 
 abstract class Failure extends Equatable {
   Failure({required this.message, required this.statusCode})
@@ -18,6 +19,8 @@ abstract class Failure extends Equatable {
 
 class ApiFailure extends Failure {
   ApiFailure({required super.message, required super.statusCode});
+
+  ApiFailure.fromException(ApiException apiException) : this(message: apiException.message, statusCode: apiException.statusCode);
 }
 
 class CacheFailure extends Failure {

@@ -13,8 +13,9 @@ import 'package:mortygram/features/characters/data/datasource/local/characters_l
 import 'package:mortygram/features/characters/data/datasource/remote/characters_remote_data_source.dart';
 import 'package:mortygram/features/characters/data/repos/characters_repo_impl.dart';
 import 'package:mortygram/features/characters/domain/repos/characters_repo.dart';
-import 'package:mortygram/features/characters/domain/usecases/watch_characters.dart';
+import 'package:mortygram/features/characters/domain/usecases/get_characters.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
+import 'package:mortygram/features/episodes/data/datasource/remote/episodes_remote_data_source.dart';
 import 'package:mortygram/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:mortygram/features/on_boarding/data/repos/on_boarding_repo_impl.dart';
 import 'package:mortygram/features/on_boarding/domain/repos/on_boarding_repo.dart';

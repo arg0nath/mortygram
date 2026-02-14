@@ -3,8 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/res/app_assets.dart';
 
-class CustomErrorWidget extends StatelessWidget {
-  const CustomErrorWidget({super.key, this.helpingMessage});
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({super.key, this.helpingMessage});
 
   final String? helpingMessage;
 
@@ -26,7 +26,7 @@ class CustomErrorWidget extends StatelessWidget {
                     mainAxisSize: .min,
                     spacing: 16,
                     children: <Widget>[
-                      Opacity(opacity: 0.7, child: LottieBuilder.asset(AppAssets.errorAnimation, repeat: true, width: 200, height: 200)),
+                      Opacity(opacity: 0.7, child: LottieBuilder.asset(AppAssets.errorAnimation, repeat: false, width: 200, height: 200)),
                       Text('Something went wrong.', textAlign: TextAlign.center, style: context.textTheme.titleMedium),
                       if (helpingMessage != null)
                         Padding(
