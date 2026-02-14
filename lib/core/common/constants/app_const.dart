@@ -18,7 +18,7 @@ class AppConst {
 
   static const String baseApiUrl = 'rickandmortyapi.com/api';
   static const String charactersApiUrl = 'character';
-  static const String characterDetailsApiUrl = 'character/{characterId}';
+  static const String characterDetailsApiUrl = 'character';
   static const String characterEpisodesApiUrl = 'location';
   static const String characterLocationsApiUrl = 'episode';
 

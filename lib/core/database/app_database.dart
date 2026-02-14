@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:mortygram/core/database/tables/character_details_table.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
@@ -10,12 +11,12 @@ import 'tables/pagination_metadata_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: <Type>[CharactersTable, PaginationMetadataTable])
+@DriftDatabase(tables: <Type>[CharactersTable, CharacterDetailsTable, PaginationMetadataTable])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   // GET characters by page (Future)
   Future<List<CharactersTableData>> getCharactersByPage(int page) {
@@ -44,13 +45,24 @@ class AppDatabase extends _$AppDatabase {
 
   // Get pagination metadata
   Future<PaginationMetadataTableData?> getPaginationMetadata(String endpoint, int page) {
-    return (select(paginationMetadataTable)
-          ..where((tbl) => tbl.endpoint.equals(endpoint) & tbl.page.equals(page)))
-        .getSingleOrNull();
+    return (select(paginationMetadataTable)..where((tbl) => tbl.endpoint.equals(endpoint) & tbl.page.equals(page))).getSingleOrNull();
+  }
+
+  // GET character details by ID
+  Future<CharacterDetailsTableData?> getCharacterDetailsById(int characterId) {
+    return (select(characterDetailsTable)..where((tbl) => tbl.id.equals(characterId))).getSingleOrNull();
+  }
+
+  // INSERT OR UPDATE character details
+  Future<void> insertCharacterDetails(
+    CharacterDetailsTableCompanion characterDetails,
+  ) async {
+    await into(characterDetailsTable).insertOnConflictUpdate(characterDetails);
   }
 
   // CLEAR
   Future<void> clearCharacters() => delete(charactersTable).go();
+  Future<void> clearCharacterDetails() => delete(characterDetailsTable).go();
   Future<void> clearPaginationMetadata() => delete(paginationMetadataTable).go();
 }
 

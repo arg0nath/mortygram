@@ -1,14 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:mortygram/config/typedefs/typedefs.dart';
+import 'package:mortygram/config/usecase/usecase.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/domain/repos/characters_repo.dart';
 import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
 
-class GetCharacters {
+class GetCharacters extends UseCaseWithParams<PaginatedResults<Character>, PaginatedGetCharactersParams> {
   const GetCharacters(this._repo);
 
   final CharactersRepo _repo;
 
+  @override
   ResultFuture<PaginatedResults<Character>> call(PaginatedGetCharactersParams params) {
     return _repo.getCharacters(page: params.page, keyword: params.keyword);
   }
