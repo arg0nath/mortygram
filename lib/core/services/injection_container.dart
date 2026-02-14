@@ -36,6 +36,12 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<CharactersRepo>(() => CharactersRepoImpl(sl(), sl()))
     ..registerLazySingleton<CharactersLocalDataSource>(() => CharactersLocalDataSourceImpl(sl<AppDatabase>()))
     ..registerLazySingleton<CharactersRemoteDataSource>(() => CharactersRemoteDataSourceImpl(sl<Dio>(), sl<EpisodesRemoteDataSource>()))
+    // * Character Details
+    ..registerFactory(() => CharacterDetailsBloc(getCharacterDetails: sl()))
+    ..registerLazySingleton(() => GetCharacterDetails(sl()))
+    ..registerLazySingleton<CharacterDetailsRepo>(() => CharacterDetailsRepoImpl(sl(), sl()))
+    ..registerLazySingleton<CharacterDetailsLocalDataSource>(() => CharacterDetailsLocalDataSourceImpl(sl<AppDatabase>()))
+    ..registerLazySingleton<CharacterDetailsRemoteDataSource>(() => CharacterDetailsRemoteDataSourceImpl(sl<Dio>(), sl<EpisodesRemoteDataSource>()))
     // * Episodes
     ..registerLazySingleton<EpisodesRemoteDataSource>(() => EpisodesRemoteDataSourceImpl(sl<Dio>()))
     // * General Services

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_network_image.dart';
+import 'package:mortygram/core/common/widgets/status_indicator.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/presentation/widgets/character_info_field.dart';
-import 'package:mortygram/features/characters/presentation/widgets/status_indicator.dart';
 
 class CharacterListTile extends StatelessWidget {
   const CharacterListTile({required this.character, required this.onTap, super.key});

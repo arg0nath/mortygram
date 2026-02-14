@@ -3,11 +3,18 @@ import 'package:cached_network_svg_image/cached_network_svg_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomNetworkImage extends StatelessWidget {
-  const CustomNetworkImage({super.key, required this.imageUrl, this.width, this.height});
+  const CustomNetworkImage({
+    super.key,
+    this.fit = BoxFit.cover,
+    required this.imageUrl,
+    this.width,
+    this.height,
+  });
 
   final String imageUrl;
   final double? width;
   final double? height;
+  final BoxFit fit;
 
   bool get isSvg => imageUrl.toLowerCase().endsWith('.svg');
 
@@ -20,7 +27,7 @@ class CustomNetworkImage extends StatelessWidget {
         errorWidget: const _ErrorWidget(),
         width: width,
         height: height,
-        fit: BoxFit.cover,
+        fit: fit,
         fadeDuration: const Duration(milliseconds: 200),
       );
     } else {
@@ -28,7 +35,7 @@ class CustomNetworkImage extends StatelessWidget {
         imageUrl: imageUrl,
         width: width,
         height: height,
-        fit: BoxFit.cover,
+        fit: fit,
         placeholder: (BuildContext context, String url) => const _PlaceHolderWidget(),
         errorWidget: (BuildContext context, String url, Object error) => const _ErrorWidget(),
       );
