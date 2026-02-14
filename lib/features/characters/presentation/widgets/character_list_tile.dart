@@ -35,9 +35,9 @@ class CharacterListTile extends StatelessWidget {
             Expanded(
               flex: 44,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+                borderRadius: const .only(
+                  topLeft: .circular(8),
+                  bottomLeft: .circular(8),
                 ),
                 child: CustomNetworkImage(imageUrl: character.image),
               ),
@@ -58,7 +58,7 @@ class CharacterListTile extends StatelessWidget {
                       maxLines: 2,
                       overflow: .ellipsis,
                       style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
 
