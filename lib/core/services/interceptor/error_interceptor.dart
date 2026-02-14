@@ -19,7 +19,7 @@ class ErrorInterceptor extends Interceptor {
     } else if (err.type == DioExceptionType.connectionError) {
       errorMessage = 'Connection Error. Please check your internet connection.';
     } else {
-      errorMessage = 'Something went wrong';
+      errorMessage = 'Something went wrong Morrrty';
     }
 
     myLog('Error: $errorMessage', level: .error);

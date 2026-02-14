@@ -27,7 +27,7 @@ class ErrorPage extends StatelessWidget {
                     spacing: 16,
                     children: <Widget>[
                       Opacity(opacity: 0.7, child: LottieBuilder.asset(AppAssets.errorAnimation, repeat: false, width: 200, height: 200)),
-                      Text('Something went wrong.', textAlign: TextAlign.center, style: context.textTheme.titleMedium),
+                      Text('Something went wrong Morrrty', textAlign: TextAlign.center, style: context.textTheme.titleMedium),
                       if (helpingMessage != null)
                         Padding(
                           padding: const .symmetric(horizontal: 16.0),
