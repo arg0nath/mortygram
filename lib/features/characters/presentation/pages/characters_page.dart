@@ -53,11 +53,6 @@ class _CharactersPageState extends State<CharactersPage> {
     return currentScroll >= (maxScroll - 200);
   }
 
-  void _onSearch(String? keyword) {
-    final String? searchKeyword = keyword?.isEmpty ?? true ? null : keyword;
-    context.read<CharactersBloc>().add(FetchCharactersEvent(page: 1, keyword: searchKeyword));
-  }
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -107,7 +102,9 @@ class _CharactersPageState extends State<CharactersPage> {
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: _SearchBarDelegate(
-                      child: SearchBarMrt(onSearch: _onSearch),
+                      child: SearchBarMrt(
+                        onSearch: (String? query) => charactersBloc.add(FetchCharactersEvent(page: 1, keyword: query)),
+                      ),
                     ),
                   ),
                   state.when(
