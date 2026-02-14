@@ -8,7 +8,11 @@ import 'package:mortygram/features/character_details/domain/entities/character_d
 import 'package:mortygram/features/character_details/presentation/bloc/character_details_bloc.dart';
 
 class CharacterDetailsPage extends StatefulWidget {
-  const CharacterDetailsPage({required this.characterId, super.key});
+  const CharacterDetailsPage({
+    required this.characterId,
+
+    super.key,
+  });
 
   final int characterId;
 
@@ -31,8 +35,20 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          title: BlocBuilder<CharacterDetailsBloc, CharacterDetailsState>(
+            builder: (BuildContext context, CharacterDetailsState state) {
+              return state.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                loaded: (CharacterDetails details) => Text(details.name),
+              );
+            },
+          ),
+        ),
+      ),
       body: BlocConsumer<CharacterDetailsBloc, CharacterDetailsState>(
         listener: (BuildContext context, CharacterDetailsState state) {
           // reset loading flag when data is loaded
@@ -60,12 +76,23 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
               return Hero(
                 tag: characterDetails.id,
                 child: Column(
+                  crossAxisAlignment: .center,
                   children: [
-                    CustomNetworkImage(imageUrl: characterDetails.image, width: double.infinity, height: 300),
+                    Padding(
+                      padding: const .all(8.0),
+                      child: ClipRRect(
+                        borderRadius: .circular(8),
+                        child: CustomNetworkImage(fit: .contain, imageUrl: characterDetails.image, width: context.width),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     Text(characterDetails.name),
                     Text(characterDetails.status),
                     Text(characterDetails.species),
+                    Text(characterDetails.gender),
+                    Text(characterDetails.origin.name),
+                    Text(characterDetails.location.name),
+                    if (characterDetails.firstEpisodeName != null) Text(characterDetails.firstEpisodeName!),
                   ],
                 ),
               );

@@ -26,11 +26,14 @@ class CharacterListView extends StatelessWidget {
             itemCount: characters.length + (isLoadingMore ? 1 : 0),
             itemBuilder: (BuildContext context, int index) {
               if (index < characters.length) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CharacterListTile(
-                    character: characters[index],
-                    onTap: () => onCharacterTap(characters[index]),
+                return Hero(
+                  tag: 'character_image_${characters[index].id}',
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CharacterListTile(
+                      character: characters[index],
+                      onTap: () => onCharacterTap(characters[index]),
+                    ),
                   ),
                 );
               }
