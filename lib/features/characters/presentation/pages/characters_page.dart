@@ -7,7 +7,9 @@ import 'package:mortygram/core/common/widgets/error_page.dart';
 import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
-import 'package:mortygram/features/characters/presentation/widgets/character_list_view.dart';
+import 'package:mortygram/features/characters/presentation/widgets/character_sliver_list.dart';
+import 'package:mortygram/features/characters/presentation/widgets/scroll_to_top_button.dart';
+import 'package:mortygram/features/characters/presentation/widgets/search_bar_mrt.dart';
 
 class CharactersPage extends StatefulWidget {
   const CharactersPage({super.key});
@@ -51,6 +53,11 @@ class _CharactersPageState extends State<CharactersPage> {
     return currentScroll >= (maxScroll - 200);
   }
 
+  void _onSearch(String? keyword) {
+    final String? searchKeyword = keyword?.isEmpty ?? true ? null : keyword;
+    context.read<CharactersBloc>().add(FetchCharactersEvent(page: 1, keyword: searchKeyword));
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -59,88 +66,109 @@ class _CharactersPageState extends State<CharactersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Mortygram', style: context.textTheme.headlineSmall?.copyWith(fontWeight: .bold)),
-      ),
-      floatingActionButton: _showScrollToTopButton
-          ? FloatingActionButton.small(
-              onPressed: () => _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut),
-              child: const Icon(Icons.arrow_upward_rounded),
-            )
-          : null,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<CharactersBloc>().add(const RefreshCharactersEvent());
-          await Future<void>.delayed(const Duration(milliseconds: 500));
-        },
-        child: BlocConsumer<CharactersBloc, CharactersState>(
-          listener: (BuildContext context, CharactersState state) {
-            // reset loading flag when data is loaded
-            state.maybeWhen(
-              loaded: (_, _, _, bool isLoadingMore, String? loadMoreError) {
-                if (!isLoadingMore) {
-                  _isLoadingMore = false;
-                }
-
-                // Show SnackBar if there's a load more error
-                if (loadMoreError != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(loadMoreError),
-                      backgroundColor: context.colorScheme.error,
-                      behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 3),
-                    ),
-                  );
-                }
-              },
-              orElse: () {},
-            );
+    final CharactersBloc charactersBloc = context.watch<CharactersBloc>();
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: _showScrollToTopButton ? ScrollToTopButton(scrollController: _scrollController) : null,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            charactersBloc.add(const RefreshCharactersEvent());
+            await Future<void>.delayed(const Duration(milliseconds: 500));
           },
-
-          builder: (BuildContext context, CharactersState state) {
-            return state.when(
-              initial: () => const SizedBox.shrink(),
-              loading: () => const Center(child: CustomLoadingIndicator()),
-              error: (String message) => ErrorPage(helpingMessage: message),
-              loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError) {
-                return characters.isEmpty
-                    ? _EmptyListView()
-                    : CharacterListView(
+          child: BlocConsumer<CharactersBloc, CharactersState>(
+            listener: (BuildContext context, CharactersState state) {
+              // reset loading flag when data is loaded
+              state.maybeWhen(
+                loaded: (_, _, _, bool isLoadingMore, String? loadMoreError) {
+                  if (!isLoadingMore) {
+                    _isLoadingMore = false;
+                  }
+                  // Show SnackBar if there's a load more error
+                  if (loadMoreError != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(loadMoreError), backgroundColor: context.colorScheme.error, behavior: SnackBarBehavior.floating, duration: const Duration(seconds: 3)),
+                    );
+                  }
+                },
+                orElse: () {},
+              );
+            },
+            builder: (BuildContext context, CharactersState state) {
+              return CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    scrolledUnderElevation: 0.0,
+                    floating: true,
+                    snap: true,
+                    title: Text('Mortygram', style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                  ),
+                  //search bar
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SearchBarDelegate(
+                      child: SearchBarMrt(onSearch: _onSearch),
+                    ),
+                  ),
+                  state.when(
+                    initial: () => const SliverFillRemaining(child: SizedBox.shrink()),
+                    loading: () => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
+                    searching: () => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
+                    error: (String message) => SliverFillRemaining(child: ErrorPage(helpingMessage: message)),
+                    searched: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError) {
+                      return CharacterSliverList(
                         characters: characters,
-                        scrollController: _scrollController,
                         isLoadingMore: isLoadingMore,
                         onCharacterTap: (Character character) => context.goNamed(
                           RouteName.characterDetailsPageName,
                           pathParameters: <String, String>{'characterId': character.id.toString()},
                         ),
                       );
-              },
-            );
-          },
+                    },
+                    loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError) {
+                      return CharacterSliverList(
+                        characters: characters,
+                        isLoadingMore: isLoadingMore,
+                        onCharacterTap: (Character character) => context.goNamed(
+                          RouteName.characterDetailsPageName,
+                          pathParameters: <String, String>{'characterId': character.id.toString()},
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-/// A simple widget to show when the character list is empty
-///
-/// ListView so that pull-to-refresh can still be used to trigger a reload of characters
-class _EmptyListView extends StatelessWidget {
-  const _EmptyListView();
+/// Delegate for creating a pinned search bar in the sliver scroll view
+class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+
+  _SearchBarDelegate({required this.child});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      children: <Widget>[
-        SizedBox(
-          height: context.height * 0.7,
-          child: const Center(child: Text('No characters found.')),
-        ),
-      ],
+  double get minExtent => 72.0;
+
+  @override
+  double get maxExtent => 72.0;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: context.theme.appBarTheme.backgroundColor,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      child: child,
     );
+  }
+
+  @override
+  bool shouldRebuild(_SearchBarDelegate oldDelegate) {
+    return false;
   }
 }
