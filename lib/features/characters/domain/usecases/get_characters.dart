@@ -20,11 +20,13 @@ class GetCharactersParams extends Equatable {
   const GetCharactersParams({
     required this.page,
     required this.keyword,
+    required this.statusFilter,
+    required this.genderFilter,
   });
 
-  final String? keyword;
+  final String? keyword, genderFilter, statusFilter;
   final int page;
 
   @override
-  List<Object?> get props => <Object?>[page, keyword];
+  List<Object?> get props => <Object?>[page, keyword, genderFilter, statusFilter];
 }

@@ -22,20 +22,25 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   void _onInitial(InitialCharactersEvent event, Emitter<CharactersState> emit) {
     _pageCache.clear();
     _currentSearchQuery = null;
+    _currentGenderFilter = null;
+    _currentStatusFilter = null;
     emit(const CharactersState.initial());
   }
 
   Future<void> _onRefreshHandler(RefreshCharactersEvent event, Emitter<CharactersState> emit) async {
     _pageCache.clear();
-    add(FetchCharactersEvent(page: 1, keyword: _currentSearchQuery));
+    add(FetchCharactersEvent(page: 1, keyword: _currentSearchQuery, genderFilter: _currentGenderFilter, statusFilter: _currentStatusFilter));
   }
 
   // fetch characters for a specific page
   Future<void> _onFetchCharactersHandler(FetchCharactersEvent event, Emitter<CharactersState> emit) async {
-    // update current search query and clear cache if search query changed
-    final bool isNewSearch = event.keyword != _currentSearchQuery;
+    // update current search query/filters and clear cache if any changed
+    final bool isNewSearch = event.keyword != _currentSearchQuery || event.genderFilter != _currentGenderFilter || event.statusFilter != _currentStatusFilter;
+
     if (isNewSearch) {
       _currentSearchQuery = event.keyword;
+      _currentGenderFilter = event.genderFilter;
+      _currentStatusFilter = event.statusFilter;
       _pageCache.clear();
     }
 
@@ -46,7 +51,14 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
       emit(CharactersState.loading(isSearching: isSearching, searchQuery: event.keyword));
     }
 
-    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(GetCharactersParams(page: event.page, keyword: event.keyword));
+    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(
+      GetCharactersParams(
+        page: event.page,
+        keyword: event.keyword,
+        genderFilter: event.genderFilter,
+        statusFilter: event.statusFilter,
+      ),
+    );
 
     result.fold(
       (Failure failure) {
@@ -116,7 +128,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
             ),
           );
           // fetch next page
-          add(FetchCharactersEvent(page: currentPage + 1, keyword: _currentSearchQuery));
+          add(FetchCharactersEvent(page: currentPage + 1, keyword: _currentSearchQuery, genderFilter: _currentGenderFilter, statusFilter: _currentStatusFilter));
         }
       },
       orElse: () {},
@@ -126,4 +138,6 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   final GetCharacters _getCharacters;
   final Map<int, List<Character>> _pageCache = <int, List<Character>>{}; // to cache characters by page
   String? _currentSearchQuery;
+  String? _currentStatusFilter;
+  String? _currentGenderFilter;
 }

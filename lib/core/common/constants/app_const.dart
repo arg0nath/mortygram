@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConst {
   AppConst._(); // Prevent instantiation
   // #region // * Shared Preferences Keys
@@ -7,11 +9,10 @@ class AppConst {
 
   static const String appName = 'Mortygram';
 
-  static const String baseApiUrl = 'rickandmortyapi.com/api';
-  static const String charactersApiUrl = 'character';
-  static const String characterDetailsApiUrl = 'character';
-  static const String characterEpisodesApiUrl = 'location';
-  static const String characterLocationsApiUrl = 'episode';
+  static const String charactersApiUrl = '/character';
+  static const String characterDetailsApiUrl = '/character';
+  static const String characterLocationApiUrl = '/location';
+  static const String characterEpisodeApiUrl = '/episode';
 
   static const int retryMaxAttempts = 2;
 
@@ -28,4 +29,18 @@ class AppConst {
   static const double networkImageBorderRadius = 80.0;
   static const double networkImageNoBorderRadius = 0.0;
   static const double networkImagePlaceholderWidth = 1.0;
+
+  //* Dropdown entries for filters
+  static const List<DropdownMenuEntry<String>> genderDropdownEntries = <DropdownMenuEntry<String>>[
+    DropdownMenuEntry<String>(value: 'alive', label: 'Female'),
+    DropdownMenuEntry<String>(value: 'dead', label: 'Male'),
+    DropdownMenuEntry<String>(value: 'genderless', label: 'Genderless'),
+    DropdownMenuEntry<String>(value: 'unknown', label: 'unknown'),
+  ];
+
+  static const List<DropdownMenuEntry<String>> statusDropdownEntries = <DropdownMenuEntry<String>>[
+    DropdownMenuEntry<String>(value: 'alive', label: 'Alive'),
+    DropdownMenuEntry<String>(value: 'dead', label: 'Dead'),
+    DropdownMenuEntry<String>(value: 'unknown', label: 'Unknown'),
+  ];
 }
