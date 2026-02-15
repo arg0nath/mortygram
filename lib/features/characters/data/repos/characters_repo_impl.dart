@@ -23,10 +23,15 @@ class CharactersRepoImpl implements CharactersRepo {
   final CharactersLocalDataSource _local;
 
   @override
-  ResultFuture<PaginatedResults<Character>> getCharacters({required int page, String? keyword}) async {
+  ResultFuture<PaginatedResults<Character>> getCharacters({
+    required int page,
+    String? keyword,
+    String? genderFilter,
+    String? statusFilter,
+  }) async {
     //i choose this approcah to skip local db when searching because it adds complexity to the local data source
     //so skip local DB when searching - always fetch from API with search query
-    final bool isSearching = keyword != null && keyword.isNotEmpty;
+    final bool isSearching = keyword != null && keyword.isNotEmpty || genderFilter != null && genderFilter.isNotEmpty || statusFilter != null && statusFilter.isNotEmpty;
 
     if (!isSearching) {
       // try to get from local DB (non search case)
@@ -42,7 +47,12 @@ class CharactersRepoImpl implements CharactersRepo {
 
     // fetch from API (for search or when not cached)
     try {
-      final PaginatedResults<CharacterDto> remoteResult = await _remote.fetchCharacters(page: page, keyword: keyword);
+      final PaginatedResults<CharacterDto> remoteResult = await _remote.fetchCharacters(
+        page: page,
+        keyword: keyword,
+        genderFilter: genderFilter,
+        statusFilter: statusFilter,
+      );
 
       // cache characters and pagination metadata (only for non-search)
       if (!isSearching) {

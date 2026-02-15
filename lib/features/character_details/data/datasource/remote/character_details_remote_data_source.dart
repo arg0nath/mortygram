@@ -5,6 +5,7 @@ import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/features/character_details/data/dtos/character_details_dto.dart';
 import 'package:mortygram/features/episodes/data/datasource/remote/episodes_remote_data_source.dart';
 import 'package:mortygram/features/episodes/data/dtos/episode_dto.dart';
+import 'package:mortygram/features/episodes/domain/helpers/extract_episode_id.dart';
 
 abstract interface class CharacterDetailsRemoteDataSource {
   Future<CharacterDetailsDto> fetchCharacterDetails({required int characterId});
@@ -18,7 +19,7 @@ class CharacterDetailsRemoteDataSourceImpl implements CharacterDetailsRemoteData
 
   @override
   Future<CharacterDetailsDto> fetchCharacterDetails({required int characterId}) async {
-    final String url = 'https://${AppConst.baseApiUrl}/${AppConst.characterDetailsApiUrl}/$characterId';
+    final String url = '${AppConst.characterDetailsApiUrl}/$characterId';
 
     try {
       final Response<DataMap> response = await _dio.get<DataMap>(url);
@@ -32,19 +33,21 @@ class CharacterDetailsRemoteDataSourceImpl implements CharacterDetailsRemoteData
       }
       CharacterDetailsDto characterDetailsDto = CharacterDetailsDto.fromJson(response.data!);
 
-      // fetch first episode name for each character
+      // first episode name
 
       String? episodeName;
-
       if (characterDetailsDto.episode.isNotEmpty) {
-        final EpisodeDto? episodeDto = await _episodesRemoteDataSource.fetchEpisode(url: characterDetailsDto.episode.first);
-        episodeName = episodeDto?.name;
+        final int? episodeId = extractEpisodeId(characterDetailsDto.episode.first);
+        if (episodeId != null) {
+          final dynamic result = await _episodesRemoteDataSource.fetchEpisodes(ids: [episodeId]);
+          if (result is EpisodeDto) {
+            episodeName = result.name;
+          }
+        }
       }
 
-      // new DTO with the episode name and page number
-      characterDetailsDto = characterDetailsDto.copyWith(
-        firstEpisodeName: episodeName,
-      );
+      // new DTO with the episode name
+      characterDetailsDto = characterDetailsDto.copyWith(firstEpisodeName: episodeName);
 
       return characterDetailsDto;
     } on DioException catch (e) {

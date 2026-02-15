@@ -35,6 +35,7 @@ extension CharacterDriftToDto on CharactersTableData {
       image: image,
       status: status,
       species: species,
+      page: page,
       type: type,
       gender: gender,
       episode: List<String>.from(jsonDecode(episode) as List<dynamic>),

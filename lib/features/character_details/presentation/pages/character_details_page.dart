@@ -60,9 +60,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
               helpingMessage: message,
               onRefresh: () async => context.read<CharacterDetailsBloc>().add(FetchCharacterDetailsEvent(characterId: widget.characterId)),
             ),
-            loaded: (characterDetails) => CharacterDetailsContent(
-              characterDetails: characterDetails,
-            ),
+            loaded: (characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
           );
         },
       ),

@@ -23,7 +23,7 @@ abstract class CharacterDto with _$CharacterDto {
     String? firstEpisodeName,
     required LocationDto location,
     required OriginDto origin,
-    @Default(1) @JsonKey(includeFromJson: false, includeToJson: false) int page, // Not from API
+    @Default(4) @JsonKey(includeFromJson: false, includeToJson: false) int page, // Not from API,used for local DB pagination tracking
   }) = _CharacterDto;
 
   factory CharacterDto.fromJson(DataMap json) => _$CharacterDtoFromJson(json);
@@ -44,19 +44,6 @@ abstract class CharacterDto with _$CharacterDto {
     );
   }
 
-  static CharacterDto fromEntity(Character entity) {
-    return CharacterDto(
-      id: entity.id,
-      name: entity.name,
-      image: entity.image,
-      status: entity.status,
-      species: entity.species,
-      type: entity.type,
-      episode: List.from(entity.episode),
-      gender: entity.gender,
-      firstEpisodeName: entity.firstEpisodeName,
-      location: LocationDto.fromEntity(entity.location),
-      origin: OriginDto.fromEntity(entity.origin),
-    );
-  }
+  @override
+  String toString() => 'CharacterDto(id: $id, name: $name)';
 }

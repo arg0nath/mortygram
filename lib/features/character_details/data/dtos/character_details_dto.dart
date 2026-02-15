@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mortygram/config/typedefs/typedefs.dart';
 import 'package:mortygram/features/character_details/domain/entities/character_details.dart';
-import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/locations/data/dtos/location_dto.dart';
 import 'package:mortygram/features/origins/data/dtos/origin_dto.dart';
 
@@ -41,22 +40,6 @@ abstract class CharacterDetailsDto with _$CharacterDetailsDto {
       firstEpisodeName: firstEpisodeName,
       location: location.toEntity(),
       origin: origin.toEntity(),
-    );
-  }
-
-  static CharacterDetailsDto fromEntity(Character entity) {
-    return CharacterDetailsDto(
-      id: entity.id,
-      name: entity.name,
-      image: entity.image,
-      status: entity.status,
-      species: entity.species,
-      type: entity.type,
-      episode: List.from(entity.episode),
-      gender: entity.gender,
-      firstEpisodeName: entity.firstEpisodeName,
-      location: LocationDto.fromEntity(entity.location),
-      origin: OriginDto.fromEntity(entity.origin),
     );
   }
 }

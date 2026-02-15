@@ -12,9 +12,19 @@ final GetIt sl = GetIt.instance;
 Future<void> injectionInit() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  final Dio dio = Dio(BaseOptions(connectTimeout: const Duration(seconds: 20), receiveTimeout: const Duration(seconds: 20)));
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: AppEnvs.baseUrl,
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
+    ),
+  );
 
-  dio.interceptors.addAll([ErrorInterceptor(), RetryInterceptor(dio)]);
+  dio.interceptors.addAll([
+    ErrorInterceptor(),
+    LoggingInterceptor(),
+    RetryInterceptor(dio),
+  ]);
   sl
     ..registerLazySingleton<AppDatabase>(() => AppDatabase())
     ..registerLazySingleton<Dio>(() => dio)

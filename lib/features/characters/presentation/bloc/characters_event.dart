@@ -14,14 +14,14 @@ class InitialCharactersEvent extends CharactersEvent {
 class FetchCharactersEvent extends CharactersEvent {
   const FetchCharactersEvent({
     required this.page,
-    required this.keyword,
+    this.filters = const CharacterSearchFilters(),
   });
 
-  final String? keyword;
   final int page;
+  final CharacterSearchFilters filters;
 
   @override
-  List<Object?> get props => <Object?>[page, keyword];
+  List<Object?> get props => <Object?>[page, filters];
 }
 
 class LoadMoreCharactersEvent extends CharactersEvent {
