@@ -29,6 +29,7 @@ class CharacterSliverList extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CharacterListTile(
+                  key: ValueKey('character_${characters[index].id}'),
                   character: characters[index],
                   onTap: () => onCharacterTap(characters[index]),
                 ),
