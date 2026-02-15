@@ -26,13 +26,4 @@ abstract class EpisodeDto with _$EpisodeDto {
       episode: episode,
     );
   }
-
-  static EpisodeDto fromEntity(Episode entity) {
-    return EpisodeDto(
-      id: entity.id,
-      name: entity.name,
-      url: entity.url,
-      episode: entity.episode,
-    );
-  }
 }

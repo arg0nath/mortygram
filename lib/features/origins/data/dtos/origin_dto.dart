@@ -22,11 +22,4 @@ abstract class OriginDto with _$OriginDto {
       url: url,
     );
   }
-
-  static OriginDto fromEntity(Origin entity) {
-    return OriginDto(
-      name: entity.name,
-      url: entity.url,
-    );
-  }
 }

@@ -22,11 +22,4 @@ abstract class LocationDto with _$LocationDto {
       url: url,
     );
   }
-
-  static LocationDto fromEntity(Location entity) {
-    return LocationDto(
-      name: entity.name,
-      url: entity.url,
-    );
-  }
 }
