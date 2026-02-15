@@ -6,11 +6,13 @@ class FiltersDialogButton extends StatefulWidget {
   const FiltersDialogButton({
     required this.onGenderFilterSelected,
     required this.onStatusFilterSelected,
+    required this.onClearFilters,
     super.key,
   });
 
   final void Function(String? genderFilter) onGenderFilterSelected;
   final void Function(String? statusFilter) onStatusFilterSelected;
+  final VoidCallback onClearFilters;
 
   @override
   State<FiltersDialogButton> createState() => _FiltersDialogButtonState();
@@ -22,9 +24,15 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.filter_alt),
-      onPressed: () => _showFiltersDialog(context),
+    return Badge(
+      backgroundColor: context.colorScheme.secondary,
+      largeSize: 10,
+      smallSize: 10,
+      isLabelVisible: _selectedStatus != null || _selectedGender != null,
+      child: IconButton(
+        icon: _selectedStatus != null || _selectedGender != null ? const Icon(Icons.filter_alt_rounded, color: Colors.white) : const Icon(Icons.filter_alt_outlined),
+        onPressed: () => _showFiltersDialog(context),
+      ),
     );
   }
 
@@ -37,6 +45,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
             return AlertDialog(
               title: const Text('Filters'),
               content: Column(
+                spacing: 16,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Row(
@@ -56,7 +65,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -80,27 +89,24 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    setDialogState(() {
+                    setState(() {
                       _selectedGender = null;
                       _selectedStatus = null;
                     });
-                    widget.onStatusFilterSelected(null);
-                    widget.onGenderFilterSelected(null);
+                    widget.onClearFilters();
+                    Navigator.pop(context);
                   },
                   child: Text('Clear', style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.error)),
                 ),
-                TextButton.icon(
+                FilledButton(
                   onPressed: () {
-                    widget.onStatusFilterSelected(_selectedStatus);
+                    // Update the widget's state to show badge and filled icon
+                    setState(() {});
                     widget.onGenderFilterSelected(_selectedGender);
-                    Navigator.of(context).pop();
+                    widget.onStatusFilterSelected(_selectedStatus);
+                    Navigator.pop(context);
                   },
-                  iconAlignment: .end,
-                  icon: Icon(Icons.check_rounded),
-                  label: Text(
-                    'Apply',
-                    style: context.textTheme.labelLarge?.copyWith(fontWeight: .bold, color: context.colorScheme.primary),
-                  ),
+                  child: const Text('Apply'),
                 ),
               ],
             );

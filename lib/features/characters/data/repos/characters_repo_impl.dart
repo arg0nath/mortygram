@@ -31,7 +31,7 @@ class CharactersRepoImpl implements CharactersRepo {
   }) async {
     //i choose this approcah to skip local db when searching because it adds complexity to the local data source
     //so skip local DB when searching - always fetch from API with search query
-    final bool isSearching = keyword != null && keyword.isNotEmpty;
+    final bool isSearching = keyword != null && keyword.isNotEmpty || genderFilter != null && genderFilter.isNotEmpty || statusFilter != null && statusFilter.isNotEmpty;
 
     if (!isSearching) {
       // try to get from local DB (non search case)

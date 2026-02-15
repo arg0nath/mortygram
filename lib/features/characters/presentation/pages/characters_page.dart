@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mortygram/config/logger/my_log.dart';
+import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_loading_indicator.dart';
 import 'package:mortygram/core/common/widgets/error_page.dart';
 import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
+import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:mortygram/features/characters/presentation/widgets/character_sliver_list.dart';
+import 'package:mortygram/features/characters/presentation/widgets/filters/filters_button.dart';
 import 'package:mortygram/features/characters/presentation/widgets/scroll_to_top_button.dart';
 import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_delegate.dart';
 import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_mrt.dart';
@@ -24,17 +28,25 @@ class _CharactersPageState extends State<CharactersPage> {
   bool _isLoadingMore = false;
   bool _showScrollToTopButton = false;
 
+  // Filter state
+  CharacterSearchFilters _activeFilters = const CharacterSearchFilters();
+
   @override
   void initState() {
     super.initState();
-    context.read<CharactersBloc>().add(const FetchCharactersEvent(page: 1, keyword: null)); //init load
-    _scrollController.addListener(_onScroll); //listein to scroll changes
+    _applyFilters(); // Use unified function
+    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  ///  function to apply all filters and search
+  void _applyFilters() {
+    context.read<CharactersBloc>().add(FetchCharactersEvent(page: 1, filters: _activeFilters));
   }
 
   //#region //* Lazy Load Stuff
@@ -75,12 +87,11 @@ class _CharactersPageState extends State<CharactersPage> {
           },
           child: BlocConsumer<CharactersBloc, CharactersState>(
             listener: (BuildContext context, CharactersState state) {
-              // reset loading flag when data is loaded
+              // Sync loading flag with bloc state
               state.maybeWhen(
-                loaded: (_, _, _, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
-                  if (!isLoadingMore) {
-                    _isLoadingMore = false;
-                  }
+                loaded: (_, _, _, bool isLoadingMore, String? loadMoreError, _) {
+                  _isLoadingMore = isLoadingMore; // Always sync the state
+
                   // Show SnackBar if there's a load more error
                   if (loadMoreError != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -95,18 +106,47 @@ class _CharactersPageState extends State<CharactersPage> {
               return CustomScrollView(
                 controller: _scrollController,
                 slivers: [
-                  SliverAppBar(
+                  SliverAppBar.medium(
+                    title: const Text(AppConst.appName),
+                    titleTextStyle: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                     scrolledUnderElevation: 0.0,
-                    floating: true,
-                    snap: true,
-                    title: Text('Mortygram', style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
                   ),
-                  //search bar
+                  //search bar + filters
                   SliverPersistentHeader(
                     pinned: true,
-                    delegate: SearchBarDelegate(
-                      child: SearchBarMrt(
-                        onSearch: (String? query) => charactersBloc.add(FetchCharactersEvent(page: 1, keyword: query)),
+                    delegate: SearchBarFilterDelegate(
+                      child: Row(
+                        mainAxisSize: .min,
+                        children: [
+                          Expanded(
+                            flex: 7,
+                            child: SearchBarMrt(
+                              onSearch: (String? query) {
+                                setState(() => _activeFilters = _activeFilters.copyWith(keyword: query));
+                                _applyFilters();
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: FiltersDialogButton(
+                              onClearFilters: () {
+                                setState(() => _activeFilters = _activeFilters.copyWith(gender: null, status: null));
+                                _applyFilters();
+                              },
+                              onGenderFilterSelected: (String? genderFilter) {
+                                myLog('Selected gender filter: $genderFilter');
+                                setState(() => _activeFilters = _activeFilters.copyWith(gender: genderFilter));
+                                _applyFilters();
+                              },
+                              onStatusFilterSelected: (String? statusFilter) {
+                                myLog('Selected status filter: $statusFilter');
+                                setState(() => _activeFilters = _activeFilters.copyWith(status: statusFilter));
+                                _applyFilters();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -119,7 +159,7 @@ class _CharactersPageState extends State<CharactersPage> {
                         onRefresh: () async => charactersBloc.add(const RefreshCharactersEvent()),
                       ),
                     ),
-                    loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
+                    loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError, _) {
                       return CharacterSliverList(
                         characters: characters,
                         isLoadingMore: isLoadingMore,

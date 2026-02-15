@@ -32,8 +32,8 @@ class AppConst {
 
   //* Dropdown entries for filters
   static const List<DropdownMenuEntry<String>> genderDropdownEntries = <DropdownMenuEntry<String>>[
-    DropdownMenuEntry<String>(value: 'alive', label: 'Female'),
-    DropdownMenuEntry<String>(value: 'dead', label: 'Male'),
+    DropdownMenuEntry<String>(value: 'female', label: 'Female'),
+    DropdownMenuEntry<String>(value: 'male', label: 'Male'),
     DropdownMenuEntry<String>(value: 'genderless', label: 'Genderless'),
     DropdownMenuEntry<String>(value: 'unknown', label: 'unknown'),
   ];

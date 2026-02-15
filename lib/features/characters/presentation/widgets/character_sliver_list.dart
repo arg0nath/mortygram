@@ -36,7 +36,7 @@ class CharacterSliverList extends StatelessWidget {
               ),
             );
           }
-
+          //loading indicator at the end of the list when loading more characters
           if (index == characters.length && isLoadingMore) {
             return const Padding(
               padding: EdgeInsets.all(16.0),

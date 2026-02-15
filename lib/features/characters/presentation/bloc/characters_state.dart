@@ -10,8 +10,7 @@ class CharactersState with _$CharactersState {
     required int lastPage,
     @Default(false) bool isLoadingMore,
     String? loadMoreError,
-    @Default(false) bool isSearching,
-    String? searchQuery,
+    @Default(CharacterSearchFilters()) CharacterSearchFilters activeFilters,
   }) = _Loaded;
 
   const factory CharactersState.error(String message) = _Error;

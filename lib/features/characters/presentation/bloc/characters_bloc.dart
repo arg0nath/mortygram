@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mortygram/core/common/errors/failures.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
+import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/domain/usecases/get_characters.dart';
 import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
 
@@ -21,51 +22,53 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
 
   void _onInitial(InitialCharactersEvent event, Emitter<CharactersState> emit) {
     _pageCache.clear();
-    _currentSearchQuery = null;
-    _currentGenderFilter = null;
-    _currentStatusFilter = null;
     emit(const CharactersState.initial());
   }
 
   Future<void> _onRefreshHandler(RefreshCharactersEvent event, Emitter<CharactersState> emit) async {
     _pageCache.clear();
-    add(FetchCharactersEvent(page: 1, keyword: _currentSearchQuery, genderFilter: _currentGenderFilter, statusFilter: _currentStatusFilter));
+    state.maybeWhen(
+      loaded: (_, _, _, _, _, CharacterSearchFilters activeFilters) {
+        add(FetchCharactersEvent(page: 1, filters: activeFilters));
+      },
+      orElse: () {
+        add(const FetchCharactersEvent(page: 1));
+      },
+    );
   }
 
   // fetch characters for a specific page
   Future<void> _onFetchCharactersHandler(FetchCharactersEvent event, Emitter<CharactersState> emit) async {
-    // update current search query/filters and clear cache if any changed
-    final bool isNewSearch = event.keyword != _currentSearchQuery || event.genderFilter != _currentGenderFilter || event.statusFilter != _currentStatusFilter;
+    final CharacterSearchFilters newFilters = event.filters;
+
+    // Check if filters changed (compare with current state)
+    CharacterSearchFilters? currentFilters;
+    state.maybeWhen(
+      loaded: (_, _, _, _, _, CharacterSearchFilters activeFilters) {
+        currentFilters = activeFilters;
+      },
+      orElse: () {},
+    );
+
+    final bool isNewSearch = currentFilters == null || newFilters != currentFilters;
 
     if (isNewSearch) {
-      _currentSearchQuery = event.keyword;
-      _currentGenderFilter = event.genderFilter;
-      _currentStatusFilter = event.statusFilter;
       _pageCache.clear();
     }
 
-    final bool isSearching = event.keyword != null && event.keyword!.isNotEmpty;
-
     // show loading state only on initial load (page 1) , for other pages, LoadMoreCharactersEvent already set isLoadingMore: true
     if (event.page == 1) {
-      emit(CharactersState.loading(isSearching: isSearching, searchQuery: event.keyword));
+      emit(CharactersState.loading(isSearching: newFilters.keyword != null && newFilters.keyword!.isNotEmpty, searchQuery: newFilters.keyword));
     }
 
-    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(
-      GetCharactersParams(
-        page: event.page,
-        keyword: event.keyword,
-        genderFilter: event.genderFilter,
-        statusFilter: event.statusFilter,
-      ),
-    );
+    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(GetCharactersParams(page: event.page, filters: newFilters));
 
     result.fold(
       (Failure failure) {
         // if this is a load more error (page > 1), keep the existing characters and show error as toast
         if (event.page > 1) {
           state.maybeWhen(
-            loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, _, bool isSearching, String? searchQuery) {
+            loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, _, CharacterSearchFilters activeFilters) {
               emit(
                 CharactersState.loaded(
                   characters,
@@ -73,8 +76,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
                   lastPage: lastPage,
                   isLoadingMore: false,
                   loadMoreError: failure.message,
-                  isSearching: isSearching,
-                  searchQuery: searchQuery,
+                  activeFilters: activeFilters,
                 ),
               );
             },
@@ -104,8 +106,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
             currentPage: event.page,
             lastPage: data.info.pages,
             isLoadingMore: false,
-            isSearching: isSearching,
-            searchQuery: event.keyword,
+            activeFilters: newFilters,
           ),
         );
       },
@@ -114,7 +115,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
 
   Future<void> _onLoadMoreHandler(LoadMoreCharactersEvent event, Emitter<CharactersState> emit) async {
     state.maybeWhen(
-      loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
+      loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, String? loadMoreError, CharacterSearchFilters activeFilters) {
         // prevent duplicate requests
         if (currentPage < lastPage && !isLoadingMore) {
           emit(
@@ -123,12 +124,11 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
               currentPage: currentPage,
               lastPage: lastPage,
               isLoadingMore: true, //  show loading more state
-              isSearching: isSearching,
-              searchQuery: searchQuery,
+              activeFilters: activeFilters,
             ),
           );
-          // fetch next page
-          add(FetchCharactersEvent(page: currentPage + 1, keyword: _currentSearchQuery, genderFilter: _currentGenderFilter, statusFilter: _currentStatusFilter));
+          // fetch next page with current active filters
+          add(FetchCharactersEvent(page: currentPage + 1, filters: activeFilters));
         }
       },
       orElse: () {},
@@ -137,7 +137,4 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
 
   final GetCharacters _getCharacters;
   final Map<int, List<Character>> _pageCache = <int, List<Character>>{}; // to cache characters by page
-  String? _currentSearchQuery;
-  String? _currentStatusFilter;
-  String? _currentGenderFilter;
 }
