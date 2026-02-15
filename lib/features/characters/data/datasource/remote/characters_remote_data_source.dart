@@ -9,7 +9,12 @@ import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
 import 'package:mortygram/features/pagination/domain/entities/pagination_meta.dart';
 
 abstract interface class CharactersRemoteDataSource {
-  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page, required String? keyword});
+  Future<PaginatedResults<CharacterDto>> fetchCharacters({
+    required int page,
+    required String? keyword,
+    required String? genderFilter,
+    required String? statusFilter,
+  });
 }
 
 class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
@@ -19,13 +24,24 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
   final EpisodesRemoteDataSource _episodesRemoteDataSource;
 
   @override
-  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page, required String? keyword}) async {
-    String url = 'https://${AppConst.baseApiUrl}/${AppConst.charactersApiUrl}?page=$page';
-
-    if (keyword != null && keyword.isNotEmpty) url += '&name=${keyword.trim()}';
+  Future<PaginatedResults<CharacterDto>> fetchCharacters({
+    required int page,
+    required String? keyword,
+    required String? genderFilter,
+    required String? statusFilter,
+  }) async {
+    String url = 'https://${AppConst.baseApiUrl}/${AppConst.charactersApiUrl}';
 
     try {
-      final Response<DataMap> response = await _dio.get<DataMap>(url);
+      final Response<DataMap> response = await _dio.get<DataMap>(
+        url,
+        queryParameters: {
+          'page': page,
+          if (keyword != null && keyword.isNotEmpty) 'name': keyword.trim(),
+          if (genderFilter != null && genderFilter.isNotEmpty) 'gender': genderFilter,
+          if (statusFilter != null && statusFilter.isNotEmpty) 'status': statusFilter,
+        },
+      );
 
       // extract pagination info
       final DataMap infoJson = response.data?['info'] as DataMap;
@@ -33,6 +49,7 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
 
       // Extract results
       final List<dynamic> results = response.data?['results'] as List;
+
       final List<CharacterDto> characterDtos = results.map((json) => CharacterDto.fromJson(json as DataMap)).toList();
 
       // fetch first episode name for each character with delay to avoid rate limiting
@@ -43,7 +60,7 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
         if (character.episode.isNotEmpty) {
           // Add delay between requests to avoid rate limiting (50ms per request)
           if (i > 0) await Future<void>.delayed(const Duration(milliseconds: 50));
-
+          //TODO(optimization): batch request to avoid multiple requeists
           final EpisodeDto? episodeDto = await _episodesRemoteDataSource.fetchEpisode(url: character.episode.first);
           episodeName = episodeDto?.name;
         }
