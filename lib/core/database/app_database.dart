@@ -27,9 +27,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   // INSERT OR UPDATE
-  Future<void> insertCharacters(
-    List<CharactersTableCompanion> characters,
-  ) async {
+  Future<void> insertCharacters(List<CharactersTableCompanion> characters) async {
     await batch((Batch batch) {
       batch.insertAllOnConflictUpdate(
         charactersTable,
