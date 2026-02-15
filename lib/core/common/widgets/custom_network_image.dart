@@ -32,12 +32,15 @@ class CustomNetworkImage extends StatelessWidget {
       );
     } else {
       return CachedNetworkImage(
+        key: ValueKey(imageUrl), // force image to rebuild when data changes
         imageUrl: imageUrl,
         width: width,
         height: height,
         fit: fit,
         placeholder: (BuildContext context, String url) => const _PlaceHolderWidget(),
         errorWidget: (BuildContext context, String url, Object error) => const _ErrorWidget(),
+        fadeInDuration: const Duration(milliseconds: 200),
+        fadeOutDuration: const Duration(milliseconds: 100),
       );
     }
   }

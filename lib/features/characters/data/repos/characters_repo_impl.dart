@@ -24,23 +24,31 @@ class CharactersRepoImpl implements CharactersRepo {
 
   @override
   ResultFuture<PaginatedResults<Character>> getCharacters({required int page, String? keyword}) async {
-    // try to get from local DB
-    final List<CharacterDto> localCharacters = await _local.getCharacters(page);
-    final PaginationMeta? localMeta = await _local.getPaginationMeta(AppConst.charactersApiUrl, page);
+    //i choose this approcah to skip local db when searching because it adds complexity to the local data source
+    //so skip local DB when searching - always fetch from API with search query
+    final bool isSearching = keyword != null && keyword.isNotEmpty;
 
-    // ff cached data exists
-    if (localCharacters.isNotEmpty && localMeta != null) {
-      final List<Character> characters = localCharacters.map((CharacterDto e) => e.toEntity()).toList();
-      return Right(PaginatedResults(results: characters, info: localMeta));
+    if (!isSearching) {
+      // try to get from local DB (non search case)
+      final List<CharacterDto> localCharacters = await _local.getCharacters(page);
+      final PaginationMeta? localMeta = await _local.getPaginationMeta(AppConst.charactersApiUrl, page);
+
+      // if cached data exists
+      if (localCharacters.isNotEmpty && localMeta != null) {
+        final List<Character> characters = localCharacters.map((CharacterDto e) => e.toEntity()).toList();
+        return Right(PaginatedResults(results: characters, info: localMeta));
+      }
     }
 
-    //not cached - fetch from API
+    // fetch from API (for search or when not cached)
     try {
-      final PaginatedResults<CharacterDto> remoteResult = await _remote.fetchCharacters(page: page);
+      final PaginatedResults<CharacterDto> remoteResult = await _remote.fetchCharacters(page: page, keyword: keyword);
 
-      // Cache  characters and pagination metadata
-      await _local.cacheCharacters(remoteResult.results);
-      await _local.cachePaginationMeta(AppConst.charactersApiUrl, page, remoteResult.info);
+      // cache characters and pagination metadata (only for non-search)
+      if (!isSearching) {
+        await _local.cacheCharacters(remoteResult.results);
+        await _local.cachePaginationMeta(AppConst.charactersApiUrl, page, remoteResult.info);
+      }
 
       final List<Character> characters = remoteResult.results.map((CharacterDto e) => e.toEntity()).toList();
       return Right(PaginatedResults(results: characters, info: remoteResult.info));

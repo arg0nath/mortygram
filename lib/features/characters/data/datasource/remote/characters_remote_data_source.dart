@@ -9,7 +9,7 @@ import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
 import 'package:mortygram/features/pagination/domain/entities/pagination_meta.dart';
 
 abstract interface class CharactersRemoteDataSource {
-  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page});
+  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page, required String? keyword});
 }
 
 class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
@@ -19,8 +19,10 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
   final EpisodesRemoteDataSource _episodesRemoteDataSource;
 
   @override
-  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page}) async {
-    final String url = 'https://${AppConst.baseApiUrl}/${AppConst.charactersApiUrl}?page=$page';
+  Future<PaginatedResults<CharacterDto>> fetchCharacters({required int page, required String? keyword}) async {
+    String url = 'https://${AppConst.baseApiUrl}/${AppConst.charactersApiUrl}?page=$page';
+
+    if (keyword != null && keyword.isNotEmpty) url += '&name=${keyword.trim()}';
 
     try {
       final Response<DataMap> response = await _dio.get<DataMap>(url);
@@ -33,12 +35,15 @@ class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
       final List<dynamic> results = response.data?['results'] as List;
       final List<CharacterDto> characterDtos = results.map((json) => CharacterDto.fromJson(json as DataMap)).toList();
 
-      // fetch first episode name for each character
+      // fetch first episode name for each character with delay to avoid rate limiting
       for (int i = 0; i < characterDtos.length; i++) {
         final CharacterDto character = characterDtos[i];
         String? episodeName;
 
         if (character.episode.isNotEmpty) {
+          // Add delay between requests to avoid rate limiting (50ms per request)
+          if (i > 0) await Future<void>.delayed(const Duration(milliseconds: 50));
+
           final EpisodeDto? episodeDto = await _episodesRemoteDataSource.fetchEpisode(url: character.episode.first);
           episodeName = episodeDto?.name;
         }

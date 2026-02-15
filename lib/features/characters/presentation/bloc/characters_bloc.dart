@@ -19,58 +19,41 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     on<RefreshCharactersEvent>(_onRefreshHandler);
   }
 
-  final GetCharacters _getCharacters;
-  final Map<int, List<Character>> _pageCache = <int, List<Character>>{}; // Cache characters by page
-
   void _onInitial(InitialCharactersEvent event, Emitter<CharactersState> emit) {
     _pageCache.clear();
+    _currentSearchQuery = null;
     emit(const CharactersState.initial());
   }
 
   Future<void> _onRefreshHandler(RefreshCharactersEvent event, Emitter<CharactersState> emit) async {
     _pageCache.clear();
-    add(const FetchCharactersEvent(page: 1, keyword: null));
-  }
-
-  //fetch next page
-  Future<void> _onLoadMoreHandler(LoadMoreCharactersEvent event, Emitter<CharactersState> emit) async {
-    state.maybeWhen(
-      loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, String? loadMoreError) {
-        // prevent duplicate requests
-        if (currentPage < lastPage && !isLoadingMore) {
-          //  show loading more state
-          emit(
-            CharactersState.loaded(
-              characters,
-              currentPage: currentPage,
-              lastPage: lastPage,
-              isLoadingMore: true,
-            ),
-          );
-          // fetch next page
-          add(FetchCharactersEvent(page: currentPage + 1, keyword: null));
-        }
-      },
-      orElse: () {},
-    );
+    add(FetchCharactersEvent(page: 1, keyword: _currentSearchQuery));
   }
 
   // fetch characters for a specific page
   Future<void> _onFetchCharactersHandler(FetchCharactersEvent event, Emitter<CharactersState> emit) async {
-    // Show loading state only on initial load (page 1)
-    // For other pages, LoadMoreCharactersEvent already set isLoadingMore: true
-    if (event.page == 1) {
-      emit(const CharactersState.loading());
+    // update current search query and clear cache if search query changed
+    final bool isNewSearch = event.keyword != _currentSearchQuery;
+    if (isNewSearch) {
+      _currentSearchQuery = event.keyword;
+      _pageCache.clear();
     }
 
-    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(PaginatedGetCharactersParams(page: event.page, keyword: event.keyword));
+    final bool isSearching = event.keyword != null && event.keyword!.isNotEmpty;
+
+    // show loading state only on initial load (page 1) , for other pages, LoadMoreCharactersEvent already set isLoadingMore: true
+    if (event.page == 1) {
+      emit(CharactersState.loading(isSearching: isSearching, searchQuery: event.keyword));
+    }
+
+    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(GetCharactersParams(page: event.page, keyword: event.keyword));
 
     result.fold(
       (Failure failure) {
         // if this is a load more error (page > 1), keep the existing characters and show error as toast
         if (event.page > 1) {
           state.maybeWhen(
-            loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, _) {
+            loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, _, bool isSearching, String? searchQuery) {
               emit(
                 CharactersState.loaded(
                   characters,
@@ -78,16 +61,16 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
                   lastPage: lastPage,
                   isLoadingMore: false,
                   loadMoreError: failure.message,
+                  isSearching: isSearching,
+                  searchQuery: searchQuery,
                 ),
               );
             },
             orElse: () {
-              // fallback
               emit(CharactersState.error(failure.message));
             },
           );
         } else {
-          // Initial load error: show error page
           emit(CharactersState.error(failure.message));
         }
       },
@@ -109,9 +92,38 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
             currentPage: event.page,
             lastPage: data.info.pages,
             isLoadingMore: false,
+            isSearching: isSearching,
+            searchQuery: event.keyword,
           ),
         );
       },
     );
   }
+
+  Future<void> _onLoadMoreHandler(LoadMoreCharactersEvent event, Emitter<CharactersState> emit) async {
+    state.maybeWhen(
+      loaded: (List<Character> characters, int currentPage, int lastPage, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
+        // prevent duplicate requests
+        if (currentPage < lastPage && !isLoadingMore) {
+          emit(
+            CharactersState.loaded(
+              characters,
+              currentPage: currentPage,
+              lastPage: lastPage,
+              isLoadingMore: true, //  show loading more state
+              isSearching: isSearching,
+              searchQuery: searchQuery,
+            ),
+          );
+          // fetch next page
+          add(FetchCharactersEvent(page: currentPage + 1, keyword: _currentSearchQuery));
+        }
+      },
+      orElse: () {},
+    );
+  }
+
+  final GetCharacters _getCharacters;
+  final Map<int, List<Character>> _pageCache = <int, List<Character>>{}; // to cache characters by page
+  String? _currentSearchQuery;
 }

@@ -7,8 +7,8 @@ import 'package:mortygram/features/pagination/domain/entities/pagination_meta.da
 abstract interface class CharactersLocalDataSource {
   Future<List<CharacterDto>> getCharacters(int page);
   Future<void> cacheCharacters(List<CharacterDto> characters);
-  Future<void> cachePaginationMeta(String endpoint, int page, PaginationMeta meta);
   Future<PaginationMeta?> getPaginationMeta(String endpoint, int page);
+  Future<void> cachePaginationMeta(String endpoint, int page, PaginationMeta meta);
 }
 
 class CharactersLocalDataSourceImpl implements CharactersLocalDataSource {
@@ -29,6 +29,19 @@ class CharactersLocalDataSourceImpl implements CharactersLocalDataSource {
   }
 
   @override
+  Future<PaginationMeta?> getPaginationMeta(String endpoint, int page) async {
+    final PaginationMetadataTableData? data = await _db.getPaginationMetadata(endpoint, page);
+    if (data == null) return null;
+
+    return PaginationMeta(
+      count: data.count,
+      pages: data.pages,
+      next: data.next,
+      prev: data.prev,
+    );
+  }
+
+  @override
   Future<void> cachePaginationMeta(String endpoint, int page, PaginationMeta meta) async {
     final companion = PaginationMetadataTableCompanion(
       endpoint: Value(endpoint),
@@ -39,18 +52,5 @@ class CharactersLocalDataSourceImpl implements CharactersLocalDataSource {
       prev: Value(meta.prev),
     );
     await _db.insertPaginationMetadata(companion);
-  }
-
-  @override
-  Future<PaginationMeta?> getPaginationMeta(String endpoint, int page) async {
-    final PaginationMetadataTableData? data = await _db.getPaginationMetadata(endpoint, page);
-    if (data == null) return null;
-    
-    return PaginationMeta(
-      count: data.count,
-      pages: data.pages,
-      next: data.next,
-      prev: data.prev,
-    );
   }
 }
