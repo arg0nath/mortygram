@@ -5,19 +5,19 @@ import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/domain/repos/characters_repo.dart';
 import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
 
-class GetCharacters extends UseCaseWithParams<PaginatedResults<Character>, PaginatedGetCharactersParams> {
+class GetCharacters extends UseCaseWithParams<PaginatedResults<Character>, GetCharactersParams> {
   const GetCharacters(this._repo);
 
   final CharactersRepo _repo;
 
   @override
-  ResultFuture<PaginatedResults<Character>> call(PaginatedGetCharactersParams params) {
+  ResultFuture<PaginatedResults<Character>> call(GetCharactersParams params) {
     return _repo.getCharacters(page: params.page, keyword: params.keyword);
   }
 }
 
-class PaginatedGetCharactersParams extends Equatable {
-  const PaginatedGetCharactersParams({
+class GetCharactersParams extends Equatable {
+  const GetCharactersParams({
     required this.page,
     required this.keyword,
   });

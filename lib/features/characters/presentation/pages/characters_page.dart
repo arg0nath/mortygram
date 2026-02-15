@@ -9,7 +9,8 @@ import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:mortygram/features/characters/presentation/widgets/character_sliver_list.dart';
 import 'package:mortygram/features/characters/presentation/widgets/scroll_to_top_button.dart';
-import 'package:mortygram/features/characters/presentation/widgets/search_bar_mrt.dart';
+import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_delegate.dart';
+import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_mrt.dart';
 
 class CharactersPage extends StatefulWidget {
   const CharactersPage({super.key});
@@ -30,8 +31,15 @@ class _CharactersPageState extends State<CharactersPage> {
     _scrollController.addListener(_onScroll); //listein to scroll changes
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  //#region //* Lazy Load Stuff
   void _onScroll() {
-    //  lazy loading stuff
+    //  lazy loading stuff // * No package used, just a scroll listener
     if (_isNearBottom && !_isLoadingMore) {
       _isLoadingMore = true;
       context.read<CharactersBloc>().add(const LoadMoreCharactersEvent());
@@ -52,16 +60,11 @@ class _CharactersPageState extends State<CharactersPage> {
     final double currentScroll = _scrollController.position.pixels;
     return currentScroll >= (maxScroll - 200);
   }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
+  //#endregion
 
   @override
   Widget build(BuildContext context) {
-    final CharactersBloc charactersBloc = context.watch<CharactersBloc>();
+    final CharactersBloc charactersBloc = context.read<CharactersBloc>();
     return SafeArea(
       child: Scaffold(
         floatingActionButton: _showScrollToTopButton ? ScrollToTopButton(scrollController: _scrollController) : null,
@@ -74,7 +77,7 @@ class _CharactersPageState extends State<CharactersPage> {
             listener: (BuildContext context, CharactersState state) {
               // reset loading flag when data is loaded
               state.maybeWhen(
-                loaded: (_, _, _, bool isLoadingMore, String? loadMoreError) {
+                loaded: (_, _, _, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
                   if (!isLoadingMore) {
                     _isLoadingMore = false;
                   }
@@ -101,7 +104,7 @@ class _CharactersPageState extends State<CharactersPage> {
                   //search bar
                   SliverPersistentHeader(
                     pinned: true,
-                    delegate: _SearchBarDelegate(
+                    delegate: SearchBarDelegate(
                       child: SearchBarMrt(
                         onSearch: (String? query) => charactersBloc.add(FetchCharactersEvent(page: 1, keyword: query)),
                       ),
@@ -109,20 +112,14 @@ class _CharactersPageState extends State<CharactersPage> {
                   ),
                   state.when(
                     initial: () => const SliverFillRemaining(child: SizedBox.shrink()),
-                    loading: () => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
-                    searching: () => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
-                    error: (String message) => SliverFillRemaining(child: ErrorPage(helpingMessage: message)),
-                    searched: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError) {
-                      return CharacterSliverList(
-                        characters: characters,
-                        isLoadingMore: isLoadingMore,
-                        onCharacterTap: (Character character) => context.goNamed(
-                          RouteName.characterDetailsPageName,
-                          pathParameters: <String, String>{'characterId': character.id.toString()},
-                        ),
-                      );
-                    },
-                    loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError) {
+                    loading: (bool isSearching, String? searchQuery) => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
+                    error: (String message) => SliverFillRemaining(
+                      child: ErrorPage(
+                        helpingMessage: message,
+                        onRefresh: () async => charactersBloc.add(const RefreshCharactersEvent()),
+                      ),
+                    ),
+                    loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError, bool isSearching, String? searchQuery) {
                       return CharacterSliverList(
                         characters: characters,
                         isLoadingMore: isLoadingMore,
@@ -140,32 +137,5 @@ class _CharactersPageState extends State<CharactersPage> {
         ),
       ),
     );
-  }
-}
-
-/// Delegate for creating a pinned search bar in the sliver scroll view
-class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-
-  _SearchBarDelegate({required this.child});
-
-  @override
-  double get minExtent => 72.0;
-
-  @override
-  double get maxExtent => 72.0;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: context.theme.appBarTheme.backgroundColor,
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      child: child,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SearchBarDelegate oldDelegate) {
-    return false;
   }
 }
