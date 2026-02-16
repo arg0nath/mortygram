@@ -4,16 +4,12 @@ import 'package:mortygram/config/theme/app_theme.dart';
 import 'package:mortygram/config/theme/domain/entity/theme_entity.dart';
 import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
 import 'package:mortygram/core/routes/go_router.dart';
-import 'package:mortygram/core/services/di_imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppView extends StatelessWidget {
   const AppView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final SharedPreferences prefs = sl<SharedPreferences>();
-
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (BuildContext context, ThemeState themeState) {
         if (themeState.themeEntity == null) {

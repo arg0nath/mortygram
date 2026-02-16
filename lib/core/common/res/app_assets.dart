@@ -11,6 +11,6 @@ class AppAssets {
   static const String fontFamily = 'Quicksand';
 }
 
-const String _imagesBasePath = 'assets/images';
+// const String _imagesBasePath = 'assets/images';
 const String _lottiesBasePath = 'assets/lotties';
 const String _svgsBasePath = 'assets/svgs';
