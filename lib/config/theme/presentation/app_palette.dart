@@ -5,7 +5,7 @@ abstract class AppPalette {
 
   static const Color transparent = Colors.transparent;
   static const List<Color> purpleGradient = <Color>[Color(0xFF6B46C1), Color(0xFF9333EA)];
-  static const List<Color> blueGradient = <Color>[Colors.blueAccent, Color(0xFF06B6D4)];
+  static const List<Color> blueGradient = <Color>[Color(0xff1DA4C4), Color(0xff1DA4C4)];
   static const List<Color> orangeGradient = <Color>[Color(0xFFEA580C), Color(0xFFF59E0B)];
-  static const List<Color> greenGradient = <Color>[Color(0xFF059669), Color(0xFF10B981)];
+  static const List<Color> greenGradient = <Color>[Color(0xFF97c769), Color(0xFF63De38)];
 }

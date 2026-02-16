@@ -5,10 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
-import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_bottom_bar.dart';
+import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_button_bar.dart';
 import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_pages.dart';
 import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_slide.dart';
-import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_top_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -61,15 +60,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         }
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: <Widget>[
+            TextButton(
+              onPressed: _skipToEnd,
+              child: Text('Skip', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400)),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              // skip button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: OnBoardingTopBar(currentPage: _currentPage, totalPages: onBoardingPages.length, onSkip: _skipToEnd).animate().fadeIn(duration: 300.ms),
-              ),
-
               // pages
               Expanded(
                 child: PageView.builder(
@@ -98,9 +101,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
-                  child: OnBoardingBottomBar(currentPage: _currentPage, totalPages: onBoardingPages.length, onNext: _nextPage),
+                  child: OnBoardingButtonBar(currentPage: _currentPage, totalPages: onBoardingPages.length, onNext: _nextPage),
                 ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.3, end: 0, curve: Curves.easeOut),
               ),
+              SizedBox(height: 30),
             ],
           ),
         ),

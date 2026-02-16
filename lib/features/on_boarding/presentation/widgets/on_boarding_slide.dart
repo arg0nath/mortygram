@@ -17,51 +17,49 @@ class OnBoardingSlide extends StatelessWidget {
         mainAxisAlignment: .center,
         children: <Widget>[
           // animated icon container with gradient
-          ClipRRect(
-            borderRadius: .circular(200),
-            child:
-                Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        shape: .circle,
-                        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: data.gradient),
-                        boxShadow: <BoxShadow>[BoxShadow(color: data.gradient.first.withAlpha(80), blurRadius: 40, offset: const Offset(0, 20))],
+          if (data.icon != null && data.gradient != null)
+            ClipRRect(
+              borderRadius: .circular(40),
+              child: Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  // shape: .circle,
+                  gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: data.gradient!), //
+                  boxShadow: <BoxShadow>[BoxShadow(color: data.gradient!.first.withAlpha(80), blurRadius: 40, offset: const Offset(0, 20))],
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    //bit decorative circle
+                    Positioned(
+                      top: 20,
+                      right: 20,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(shape: .circle, color: Colors.white10),
                       ),
-                      child: Stack(
-                        children: <Widget>[
-                          //bit decorative circle
-                          Positioned(
-                            top: 20,
-                            right: 20,
-                            child: Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(shape: .circle, color: Colors.white10),
-                            ),
-                          ),
+                    ),
 
-                          //smaller decorative circle
-                          Positioned(
-                            bottom: 30,
-                            left: 30,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(shape: .circle, color: Colors.white10),
-                            ),
-                          ),
-                          // Main icon
-                          Center(child: Icon(data.icon, size: 100, color: Colors.white)),
-                        ],
+                    //smaller decorative circle
+                    Positioned(
+                      bottom: 30,
+                      left: 30,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(shape: .circle, color: Colors.white10),
                       ),
-                    )
-                    .animate(onPlay: (AnimationController controller) => controller.repeat(reverse: true))
-                    .shimmer(delay: 2000.ms, duration: 1800.ms)
-                    .animate()
-                    .scale(delay: (index * 100).ms, duration: 600.ms, curve: Curves.elasticOut),
-          ),
-
+                    ),
+                    // Main icon
+                    Center(child: Icon(data.icon, size: 100, color: Colors.white)),
+                  ],
+                ),
+              ).animate(onPlay: (AnimationController controller) => controller.repeat(reverse: true)).shimmer(delay: 2000.ms, duration: 1800.ms).animate(),
+              // .scale(delay: (index * 100).ms, duration: 600.ms, curve: Curves.elasticOut),
+            )
+          else if (data.image != null && data.image!.isNotEmpty)
+            Image.asset(data.image!, width: 200, height: 200).animate().fadeIn(delay: (index * 100).ms, duration: 600.ms).slideY(begin: 0.3, end: 0, curve: Curves.easeOut),
           const SizedBox(height: 60),
 
           // title

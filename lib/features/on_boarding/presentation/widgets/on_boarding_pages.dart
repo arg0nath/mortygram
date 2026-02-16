@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/config/theme/presentation/app_palette.dart';
+import 'package:mortygram/core/common/res/app_assets.dart';
 import 'package:mortygram/features/on_boarding/domain/entities/on_boarding_data.dart';
 
 const List<OnBoardingData> onBoardingPages = <OnBoardingData>[
-  OnBoardingData(title: 'Welcome to\nMortygram', description: 'Your Rick and Morty wiki', icon: Icons.science_outlined, gradient: AppPalette.blueGradient),
-  OnBoardingData(title: 'Discover\n Characters', description: 'Search characters, view details of them', icon: Icons.search_rounded, gradient: AppPalette.purpleGradient),
   OnBoardingData(
-    title: 'Share &\nConnect',
-    description: 'Share your favorite character and insights with friends!',
-    icon: Icons.share_rounded,
+    title: 'Wubba Lubba,\nMortygram',
+    description: 'Your portal to the Rick and Morty universe.',
+    image: AppAssets.mortygramLogoPng,
+  ),
+  OnBoardingData(
+    title: 'Explore the\nMultiverse',
+    description: 'Search, filter, and dive into character details across every dimension.',
+    icon: Icons.search_rounded,
     gradient: AppPalette.greenGradient,
+  ),
+  OnBoardingData(
+    title: 'Share the\nMadness',
+    description: 'Show off your favorite characters and spread the interdimensional chaos.',
+    icon: Icons.share_rounded,
+    gradient: AppPalette.blueGradient,
   ),
 ];

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 
-class OnBoardingBottomBar extends StatelessWidget {
-  const OnBoardingBottomBar({required this.currentPage, required this.totalPages, required this.onNext, super.key});
+class OnBoardingButtonBar extends StatelessWidget {
+  const OnBoardingButtonBar({required this.currentPage, required this.totalPages, required this.onNext, super.key});
 
   final int currentPage;
   final int totalPages;

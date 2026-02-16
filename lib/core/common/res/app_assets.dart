@@ -1,6 +1,6 @@
 class AppAssets {
   //images
-  static const String mortygramLogoPng = 'assets/images/icon.png';
+  static const String mortygramLogoPng = 'assets/icon/icon.png';
 
   //logos
   static const String githubLogoSvg = '$_svgsBasePath/github.svg';
