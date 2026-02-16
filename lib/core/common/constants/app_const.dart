@@ -43,4 +43,6 @@ class AppConst {
     DropdownMenuEntry<String>(value: 'dead', label: 'Dead'),
     DropdownMenuEntry<String>(value: 'unknown', label: 'Unknown'),
   ];
+
+  static const String githubUrl = 'https://github.com/arg0nath';
 }
