@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 class CustomNetworkImage extends StatefulWidget {
   const CustomNetworkImage({
+    required this.imageUrl,
     super.key,
     this.fit = BoxFit.cover,
-    required this.imageUrl,
     this.width,
     this.height,
   });

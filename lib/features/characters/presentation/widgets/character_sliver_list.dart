@@ -60,7 +60,7 @@ class _EmptySliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverFillRemaining(
+    return const SliverFillRemaining(
       hasScrollBody: false,
       child: Center(
         child: Text('No characters found.'),

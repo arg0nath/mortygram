@@ -30,6 +30,9 @@ class AppConst {
   static const double networkImageNoBorderRadius = 0.0;
   static const double networkImagePlaceholderWidth = 1.0;
 
+  static const double scrollOffsetThreshold = 200.0;
+  static const double loadMoreThreshold = 200.0;
+
   //* Dropdown entries for filters
   static const List<DropdownMenuEntry<String>> genderDropdownEntries = <DropdownMenuEntry<String>>[
     DropdownMenuEntry<String>(value: 'female', label: 'Female'),

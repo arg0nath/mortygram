@@ -104,7 +104,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   child: OnBoardingButtonBar(currentPage: _currentPage, totalPages: onBoardingPages.length, onNext: _nextPage),
                 ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.3, end: 0, curve: Curves.easeOut),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),

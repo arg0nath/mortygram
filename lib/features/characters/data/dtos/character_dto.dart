@@ -20,9 +20,9 @@ abstract class CharacterDto with _$CharacterDto {
     required String type,
     required String gender,
     required List<String> episode,
-    String? firstEpisodeName,
     required LocationDto location,
     required OriginDto origin,
+    String? firstEpisodeName,
     @Default(4) @JsonKey(includeFromJson: false, includeToJson: false) int page, // Not from API,used for local DB pagination tracking
   }) = _CharacterDto;
 

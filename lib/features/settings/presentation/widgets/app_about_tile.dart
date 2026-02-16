@@ -12,7 +12,7 @@ class AppAboutTile extends StatelessWidget {
       applicationName: AppConst.appName,
 
       applicationIcon: Image.asset(AppAssets.mortygramLogoPng, width: 50, height: 50),
-      aboutBoxChildren: const [
+      aboutBoxChildren: const <Widget>[
         Text('Mortygram is a Rick and Morty fan app built with Flutter.'),
         Text('Data provided by the Rick and Morty API. App icon by Google Gemini. Lottie animations by LottieFiles.'),
         SizedBox(height: 16),

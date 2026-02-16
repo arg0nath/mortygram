@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
+import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/presentation/widgets/filters/filter_dialog_row.dart';
 
 class FiltersDialogButton extends StatefulWidget {
   const FiltersDialogButton({
-    required this.onGenderFilterSelected,
-    required this.onStatusFilterSelected,
-    required this.onClearFilters,
+    required this.currentFilters,
+    required this.onFiltersChanged,
     super.key,
   });
 
-  final void Function(String? genderFilter) onGenderFilterSelected;
-  final void Function(String? statusFilter) onStatusFilterSelected;
-  final VoidCallback onClearFilters;
+  final CharacterSearchFilters currentFilters;
+  final void Function(CharacterSearchFilters filters) onFiltersChanged;
 
   @override
   State<FiltersDialogButton> createState() => _FiltersDialogButtonState();
@@ -22,6 +21,13 @@ class FiltersDialogButton extends StatefulWidget {
 class _FiltersDialogButtonState extends State<FiltersDialogButton> {
   String? _selectedStatus;
   String? _selectedGender;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedStatus = widget.currentFilters.status;
+    _selectedGender = widget.currentFilters.gender;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +90,13 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                 ),
                 FilledButton(
                   onPressed: () {
-                    // Update the widget's state to show badge and filled icon
                     setState(() {});
-                    widget.onGenderFilterSelected(_selectedGender);
-                    widget.onStatusFilterSelected(_selectedStatus);
+                    widget.onFiltersChanged(
+                      widget.currentFilters.copyWith(
+                        gender: _selectedGender,
+                        status: _selectedStatus,
+                      ),
+                    );
                     Navigator.pop(context);
                   },
                   child: const Text('Apply', style: TextStyle(fontWeight: .w800)),

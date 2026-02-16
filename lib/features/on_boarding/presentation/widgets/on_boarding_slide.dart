@@ -24,7 +24,6 @@ class OnBoardingSlide extends StatelessWidget {
                 width: 180,
                 height: 180,
                 decoration: BoxDecoration(
-                  // shape: .circle,
                   gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: data.gradient!), //
                   boxShadow: <BoxShadow>[BoxShadow(color: data.gradient!.first.withAlpha(80), blurRadius: 40, offset: const Offset(0, 20))],
                 ),
@@ -37,7 +36,7 @@ class OnBoardingSlide extends StatelessWidget {
                       child: Container(
                         width: 60,
                         height: 60,
-                        decoration: BoxDecoration(shape: .circle, color: Colors.white10),
+                        decoration: const BoxDecoration(shape: .circle, color: Colors.white10),
                       ),
                     ),
 
@@ -48,7 +47,7 @@ class OnBoardingSlide extends StatelessWidget {
                       child: Container(
                         width: 40,
                         height: 40,
-                        decoration: BoxDecoration(shape: .circle, color: Colors.white10),
+                        decoration: const BoxDecoration(shape: .circle, color: Colors.white10),
                       ),
                     ),
                     // Main icon
@@ -60,6 +59,7 @@ class OnBoardingSlide extends StatelessWidget {
             )
           else if (data.image != null && data.image!.isNotEmpty)
             Image.asset(data.image!, width: 200, height: 200).animate().fadeIn(delay: (index * 100).ms, duration: 600.ms).slideY(begin: 0.3, end: 0, curve: Curves.easeOut),
+
           const SizedBox(height: 60),
 
           // title

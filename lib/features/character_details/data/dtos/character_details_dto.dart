@@ -20,9 +20,9 @@ abstract class CharacterDetailsDto with _$CharacterDetailsDto {
     required String type,
     required String gender,
     required List<String> episode,
-    String? firstEpisodeName,
     required LocationDto location,
     required OriginDto origin,
+    String? firstEpisodeName,
   }) = _CharacterDetailsDto;
 
   factory CharacterDetailsDto.fromJson(DataMap json) => _$CharacterDetailsDtoFromJson(json);
