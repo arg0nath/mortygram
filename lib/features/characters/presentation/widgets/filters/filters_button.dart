@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
+import 'package:mortygram/features/characters/presentation/widgets/filters/filter_dialog_row.dart';
 
 class FiltersDialogButton extends StatefulWidget {
   const FiltersDialogButton({
@@ -30,7 +31,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
       smallSize: 10,
       isLabelVisible: _selectedStatus != null || _selectedGender != null,
       child: IconButton(
-        icon: _selectedStatus != null || _selectedGender != null ? const Icon(Icons.filter_alt_rounded, color: Colors.white) : const Icon(Icons.filter_alt_outlined),
+        icon: _selectedStatus != null || _selectedGender != null ? const Icon(Icons.filter_alt_rounded) : const Icon(Icons.filter_alt_outlined),
         onPressed: () => _showFiltersDialog(context),
       ),
     );
@@ -48,40 +49,25 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                 spacing: 16,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text('Status:'),
-                      DropdownMenu<String>(
-                        key: ValueKey('status_$_selectedStatus'),
-                        hintText: 'Status',
-                        initialSelection: _selectedStatus,
-                        dropdownMenuEntries: AppConst.statusDropdownEntries,
-                        onSelected: (String? value) {
-                          setDialogState(() {
-                            _selectedStatus = value;
-                          });
-                        },
-                      ),
-                    ],
+                  FilterRow(
+                    label: 'Status:',
+                    hintText: 'Status',
+                    initialSelection: _selectedStatus,
+                    dropdownMenuEntries: AppConst.statusDropdownEntries,
+                    keyPrefix: 'status',
+                    onSelected: (String? value) => setDialogState(() {
+                      _selectedStatus = value;
+                    }),
                   ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text('Gender:'),
-                      DropdownMenu<String>(
-                        key: ValueKey('gender_$_selectedGender'),
-                        hintText: 'Gender',
-                        initialSelection: _selectedGender,
-                        dropdownMenuEntries: AppConst.genderDropdownEntries,
-                        onSelected: (String? value) {
-                          setDialogState(() {
-                            _selectedGender = value;
-                          });
-                        },
-                      ),
-                    ],
+                  FilterRow(
+                    label: 'Gender:',
+                    hintText: 'Gender',
+                    initialSelection: _selectedGender,
+                    dropdownMenuEntries: AppConst.genderDropdownEntries,
+                    keyPrefix: 'gender',
+                    onSelected: (String? value) => setDialogState(() {
+                      _selectedGender = value;
+                    }),
                   ),
                 ],
               ),
@@ -89,14 +75,12 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    setState(() {
+                    setDialogState(() {
                       _selectedGender = null;
                       _selectedStatus = null;
                     });
-                    widget.onClearFilters();
-                    Navigator.pop(context);
                   },
-                  child: Text('Clear', style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.error)),
+                  child: Text('Clear Filters', style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.error)),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -106,7 +90,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                     widget.onStatusFilterSelected(_selectedStatus);
                     Navigator.pop(context);
                   },
-                  child: const Text('Apply'),
+                  child: const Text('Apply', style: TextStyle(fontWeight: .w800)),
                 ),
               ],
             );
