@@ -7,6 +7,7 @@ import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/domain/usecases/get_characters.dart';
 import 'package:mortygram/features/pagination/domain/entities/page_result.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'characters_bloc.freezed.dart';
 part 'characters_event.dart';
@@ -15,7 +16,10 @@ part 'characters_state.dart';
 class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   CharactersBloc({required GetCharacters getCharacters}) : _getCharacters = getCharacters, super(const CharactersState.initial()) {
     on<InitialCharactersEvent>(_onInitial);
-    on<FetchCharactersEvent>(_onFetchCharactersHandler);
+    on<FetchCharactersEvent>(
+      _onFetchCharactersHandler,
+      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).asyncExpand(mapper), //debounce
+    );
     on<LoadMoreCharactersEvent>(_onLoadMoreHandler);
     on<RefreshCharactersEvent>(_onRefreshHandler);
   }
