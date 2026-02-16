@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void openGitHub(BuildContext context) async {
-  final Uri githubUri = Uri.parse('https://github.com/arg0nath');
+  final Uri githubUri = Uri.parse(AppConst.githubUrl);
 
-  if (await canLaunchUrl(githubUri)) {
+  try {
     await launchUrl(githubUri, mode: LaunchMode.externalApplication);
-  } else {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text('Could not open GitHub'), backgroundColor: context.colorScheme.error));
+  } catch (e) {
+    context.showSnackBar('Could not open GitHub');
   }
 }
