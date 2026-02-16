@@ -39,16 +39,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
       body: BlocConsumer<CharacterDetailsBloc, CharacterDetailsState>(
         listener: (BuildContext context, CharacterDetailsState state) {
           state.maybeWhen(
-            error: (String message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message),
-                  backgroundColor: context.colorScheme.error,
-                  behavior: SnackBarBehavior.floating,
-                  duration: const Duration(seconds: 3),
-                ),
-              );
-            },
+            error: (String errorMessage) => context.showSnackBar(errorMessage, isError: true),
             orElse: () {},
           );
         },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mortygram/config/logger/my_log.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_loading_indicator.dart';
@@ -91,13 +90,7 @@ class _CharactersPageState extends State<CharactersPage> {
               state.maybeWhen(
                 loaded: (_, _, _, bool isLoadingMore, String? loadMoreError, _) {
                   _isLoadingMore = isLoadingMore; // Always sync the state
-
-                  // Show SnackBar if there's a load more error
-                  if (loadMoreError != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(loadMoreError), backgroundColor: context.colorScheme.error, behavior: SnackBarBehavior.floating, duration: const Duration(seconds: 3)),
-                    );
-                  }
+                  if (loadMoreError != null) context.showSnackBar(loadMoreError, isError: true); // Show SnackBar if there's a load more error
                 },
                 orElse: () {},
               );
@@ -135,12 +128,10 @@ class _CharactersPageState extends State<CharactersPage> {
                                 _applyFilters();
                               },
                               onGenderFilterSelected: (String? genderFilter) {
-                                myLog('Selected gender filter: $genderFilter');
                                 setState(() => _activeFilters = _activeFilters.copyWith(gender: genderFilter));
                                 _applyFilters();
                               },
                               onStatusFilterSelected: (String? statusFilter) {
-                                myLog('Selected status filter: $statusFilter');
                                 setState(() => _activeFilters = _activeFilters.copyWith(status: statusFilter));
                                 _applyFilters();
                               },
