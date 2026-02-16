@@ -110,12 +110,6 @@ class _CharactersPageState extends State<CharactersPage> {
                   state.when(
                     initial: () => const SliverFillRemaining(child: SizedBox.shrink()),
                     loading: (bool isSearching, String? searchQuery) => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
-                    error: (String message) => SliverFillRemaining(
-                      child: ErrorPage(
-                        helpingMessage: message,
-                        onRefresh: () async => context.read<CharactersBloc>().add(const RefreshCharactersEvent()),
-                      ),
-                    ),
                     loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError, _) {
                       return CharacterSliverList(
                         characters: characters,
@@ -126,6 +120,12 @@ class _CharactersPageState extends State<CharactersPage> {
                         ),
                       );
                     },
+                    error: (String message) => SliverFillRemaining(
+                      child: ErrorPage(
+                        helpingMessage: message,
+                        onRefresh: () async => context.read<CharactersBloc>().add(const RefreshCharactersEvent()),
+                      ),
+                    ),
                   ),
                 ],
               );

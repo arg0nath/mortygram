@@ -47,11 +47,11 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
           return state.when(
             initial: () => const SizedBox.shrink(),
             loading: () => const Center(child: CustomLoadingIndicator()),
+            loaded: (characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
             error: (String message) => ErrorPage(
               helpingMessage: message,
               onRefresh: () async => context.read<CharacterDetailsBloc>().add(FetchCharacterDetailsEvent(characterId: widget.characterId)),
             ),
-            loaded: (characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
           );
         },
       ),
