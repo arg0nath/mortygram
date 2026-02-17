@@ -67,6 +67,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(GetCharactersParams(page: event.page, filters: newFilters));
 
     result.fold(
+      //! error handling
       (Failure failure) {
         // if this is a load more error (page > 1), keep the existing characters and show error as toast
         if (event.page > 1) {
@@ -91,6 +92,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
           emit(CharactersState.error(failure.message));
         }
       },
+      // * success handling
       (PaginatedResults<Character> data) {
         // cache this page's results
         _pageCache[event.page] = data.results;
