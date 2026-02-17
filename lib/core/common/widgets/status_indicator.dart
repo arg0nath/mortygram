@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mortygram/config/theme/presentation/app_palette.dart';
 
 /// Character status enum
 enum CharacterStatus {
@@ -7,29 +8,19 @@ enum CharacterStatus {
   unknown
   ;
 
-  /// Parse status from string
-  static CharacterStatus fromString(String status) {
-    switch (status.toLowerCase()) {
-      case 'alive':
-        return CharacterStatus.alive;
-      case 'dead':
-        return CharacterStatus.dead;
-      default:
-        return CharacterStatus.unknown;
-    }
-  }
+  /// parse status from string
+  static CharacterStatus fromString(String status) => switch (status.toLowerCase()) {
+    'alive' => CharacterStatus.alive,
+    'dead' => CharacterStatus.dead,
+    _ => CharacterStatus.unknown,
+  };
 
-  /// Get color for the status
-  Color get color {
-    switch (this) {
-      case CharacterStatus.alive:
-        return Colors.green;
-      case CharacterStatus.dead:
-        return Colors.red;
-      case CharacterStatus.unknown:
-        return Colors.grey;
-    }
-  }
+  /// gett color for the status
+  Color get color => switch (this) {
+    CharacterStatus.alive => AppPalette.green,
+    CharacterStatus.dead => AppPalette.red,
+    CharacterStatus.unknown => AppPalette.grey,
+  };
 }
 
 /// A small circular widget that indicates the status of a character (Alive, Dead, Unknown) using color coding.
