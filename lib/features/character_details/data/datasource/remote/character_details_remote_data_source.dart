@@ -30,6 +30,7 @@ class CharacterDetailsRemoteDataSourceImpl implements CharacterDetailsRemoteData
           message: 'No data received',
         );
       }
+
       CharacterDetailsDto characterDetailsDto = CharacterDetailsDto.fromJson(response.data!);
 
       // first episode name

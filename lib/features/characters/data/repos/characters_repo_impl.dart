@@ -1,9 +1,9 @@
 // ignore_for_file: always_specify_types
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:mortygram/config/typedefs/typedefs.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
-import 'package:mortygram/core/common/errors/exceptions.dart';
 import 'package:mortygram/core/common/errors/failures.dart';
 import 'package:mortygram/features/characters/data/datasource/local/characters_local_data_source.dart';
 import 'package:mortygram/features/characters/data/datasource/remote/characters_remote_data_source.dart';
@@ -62,7 +62,7 @@ class CharactersRepoImpl implements CharactersRepo {
       final List<Character> characters = remoteResult.results.map((CharacterDto e) => e.toEntity()).toList();
 
       return Right(PaginatedResults(results: characters, info: remoteResult.info));
-    } on ApiException catch (e) {
+    } on DioException catch (e) {
       return Left(ApiFailure.fromException(e));
     } catch (e) {
       return Left(ApiFailure(message: e.toString(), statusCode: 500));
