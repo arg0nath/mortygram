@@ -26,11 +26,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: AppTheme.light,
               darkTheme: AppTheme.dark,
-              home: const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              home: const Scaffold(body: Center(child: CircularProgressIndicator())),
             );
           }
 
