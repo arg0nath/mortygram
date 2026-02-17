@@ -23,7 +23,7 @@ class EpisodesRemoteDataSourceImpl implements EpisodesRemoteDataSource {
       final Response<dynamic> response = await _dio.get(url);
       if (response.data != null) {
         if (response.data is List) {
-          // If multiple episodes are returned, return the first one (or handle as needed)
+          // if multiple episodes are returned, return the first one (or handle as needed)
           final List<dynamic> dataList = response.data as List;
           final List<EpisodeDto> res = [];
           for (final dynamic data in dataList) {

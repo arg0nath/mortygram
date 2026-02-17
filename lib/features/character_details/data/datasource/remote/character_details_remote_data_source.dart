@@ -24,7 +24,6 @@ class CharacterDetailsRemoteDataSourceImpl implements CharacterDetailsRemoteData
     try {
       final Response<DataMap> response = await _dio.get<DataMap>(url);
 
-      // Extract results
       if (response.data == null) {
         throw DioException(
           requestOptions: RequestOptions(path: url),
