@@ -16,5 +16,5 @@ void main() async {
 
   Bloc.observer = AppBlocObserver();
   await injectionInit();
-  runApp(const App());
+  runApp(const MyApp());
 }

@@ -8,8 +8,8 @@ import 'package:mortygram/core/services/di_imports.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:nested/nested.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
