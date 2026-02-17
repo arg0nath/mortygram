@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
@@ -30,7 +31,7 @@ class ErrorPage extends StatelessWidget {
                       spacing: 16,
                       children: <Widget>[
                         Opacity(opacity: 0.7, child: LottieBuilder.asset(AppAssets.errorAnimation, repeat: false, width: 200, height: 200)),
-                        Text('Something went wrong Morrrty', textAlign: TextAlign.center, style: context.textTheme.titleMedium),
+                        Text('errors.somethingWentWrong'.tr(), textAlign: TextAlign.center, style: context.textTheme.titleMedium),
                         if (helpingMessage != null)
                           Padding(
                             padding: const .symmetric(horizontal: 16.0),

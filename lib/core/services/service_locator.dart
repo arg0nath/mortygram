@@ -33,6 +33,12 @@ Future<void> injectionInit() async {
   sl
     ..registerLazySingleton<AppDatabase>(() => AppDatabase())
     ..registerLazySingleton<Dio>(() => dio)
+    // * Translations
+    ..registerFactory(() => TranslationsCubit(cacheSelectedLanguage: sl(), getCachedSelectedLanguage: sl()))
+    ..registerLazySingleton(() => CacheSelectedLanguage(sl()))
+    ..registerLazySingleton(() => GetCachedSelectedLanguage(sl()))
+    ..registerLazySingleton<TranslationsRepo>(() => TranslationsRepoImpl(sl()))
+    ..registerLazySingleton<TranslationsLocalDataSource>(() => TranslationsLocalDataSourceImpl(sl()))
     // * Theme
     ..registerFactory(() => ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()))
     ..registerLazySingleton(() => GetThemeUseCase(sl()))

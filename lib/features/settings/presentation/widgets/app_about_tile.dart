@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/res/app_assets.dart';
@@ -12,13 +13,13 @@ class AppAboutTile extends StatelessWidget {
       applicationName: AppConst.appName,
       icon: const Icon(Icons.info_outline_rounded),
       applicationIcon: Image.asset(AppAssets.mortygramLogoPng, width: 50, height: 50),
-      aboutBoxChildren: const <Widget>[
-        Text('Mortygram is a Rick and Morty fan app built with Flutter.'),
-        Text('Data provided by the Rick and Morty API. App icon by Google Gemini. Lottie animations by LottieFiles.'),
-        SizedBox(height: 16),
-        Text('Developed by arg0nath'),
-        SizedBox(height: 8),
-        GithubButton(),
+      aboutBoxChildren: <Widget>[
+        Text('about.description'.tr()),
+        Text('about.credits'.tr()),
+        const SizedBox(height: 16),
+        Text('about.developer'.tr()),
+        const SizedBox(height: 8),
+        const GithubButton(),
       ],
     );
   }

@@ -1,23 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/config/theme/presentation/app_palette.dart';
 import 'package:mortygram/core/common/res/app_assets.dart';
 import 'package:mortygram/features/on_boarding/domain/entities/on_boarding_data.dart';
 
-const List<OnBoardingData> onBoardingPages = <OnBoardingData>[
+List<OnBoardingData> onBoardingPages() => <OnBoardingData>[
   OnBoardingData(
-    title: 'Wubba Lubba,\nMortygram',
-    description: 'Your portal to the Rick and Morty universe.',
+    title: 'onboarding.page1.title'.tr(),
+    description: 'onboarding.page1.description'.tr(),
     image: AppAssets.mortygramLogoPng,
   ),
   OnBoardingData(
-    title: 'Explore the\nMultiverse',
-    description: 'Search, filter, and dive into character details across every dimension.',
+    title: 'onboarding.page2.title'.tr(),
+    description: 'onboarding.page2.description'.tr(),
     icon: Icons.search_rounded,
     gradient: AppPalette.greenGradient,
   ),
   OnBoardingData(
-    title: 'Share the\nMadness',
-    description: 'Show off your favorite characters and spread the interdimensional chaos.',
+    title: 'onboarding.page3.title'.tr(),
+    description: 'onboarding.page3.description'.tr(),
     icon: Icons.share_rounded,
     gradient: AppPalette.blueGradient,
   ),

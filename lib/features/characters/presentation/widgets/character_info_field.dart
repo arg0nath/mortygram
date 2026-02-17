@@ -15,7 +15,7 @@ class CharacterInfoField extends StatelessWidget {
         Text(title, style: context.textTheme.labelSmall),
         Text(
           value,
-          maxLines: 2,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
         ),

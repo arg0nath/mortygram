@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
@@ -16,7 +17,7 @@ class CustomLoadingIndicator extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Loading...', style: context.textTheme.titleLarge),
+          Text('common.loading'.tr(), style: context.textTheme.titleLarge),
           LottieBuilder.asset(AppAssets.loadingAnimation, repeat: true, height: 200, width: 200),
         ],
       ),

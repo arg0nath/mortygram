@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 
@@ -49,7 +50,7 @@ class _MainSearchBarState extends State<MainSearchBar> {
       controller: textEditingController,
       style: context.theme.inputDecorationTheme.labelStyle,
       decoration: const InputDecoration().copyWith(
-        hintText: 'Search Character...',
+        hintText: 'characters.search'.tr(),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),

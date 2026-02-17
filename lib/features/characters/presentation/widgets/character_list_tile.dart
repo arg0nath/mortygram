@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_network_image.dart';
@@ -76,14 +77,14 @@ class CharacterListTile extends StatelessWidget {
 
                     // Last Known Location
                     CharacterInfoField(
-                      title: 'Last known location:',
+                      title: 'characters.lastKnownLocation'.tr() + ":",
                       value: character.location.name,
                     ),
 
                     // First Seen In
                     CharacterInfoField(
-                      title: 'First seen in:',
-                      value: character.firstEpisodeName ?? 'Unknown',
+                      title: 'characters.firstSeenIn'.tr() + ":",
+                      value: character.firstEpisodeName ?? 'common.unknown'.tr(),
                     ),
                   ],
                 ),
