@@ -43,14 +43,13 @@ class _AppState extends State<App> {
 
   @override
   void dispose() {
-    // Manually close the ThemeBloc since we created it ourselves
     _themeBloc?.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // While the theme is still loading, show a loading screen this ensures the app doesn't flash the wrong theme
+    // show a loading screen this ensures the app doesn't flash the wrong theme while the theme is still loading,
     if (!_isThemeLoaded || _themeBloc == null) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -25,8 +25,6 @@ class _CharactersPageState extends State<CharactersPage> {
   final ScrollController _scrollController = ScrollController();
   bool _isLoadingMore = false;
   bool _showScrollToTopButton = false;
-
-  // Filter state
   CharacterSearchFilters _activeFilters = const CharacterSearchFilters();
 
   @override
@@ -42,7 +40,7 @@ class _CharactersPageState extends State<CharactersPage> {
     super.dispose();
   }
 
-  ///  function to apply all filters and search
+  ///  Function to apply all filters and search
   void _applyFilters() {
     context.read<CharactersBloc>().add(FetchCharactersEvent(page: 1, filters: _activeFilters));
   }

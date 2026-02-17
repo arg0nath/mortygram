@@ -29,10 +29,9 @@ class CharactersRepoImpl implements CharactersRepo {
     String? genderFilter,
     String? statusFilter,
   }) async {
-    //i choose this approcah to skip local db when searching because it adds complexity to the local data source
-    //so skip local DB when searching - always fetch from API with search query
     final bool isSearching = keyword != null && keyword.isNotEmpty || genderFilter != null && genderFilter.isNotEmpty || statusFilter != null && statusFilter.isNotEmpty;
 
+    //skip local DB when searching - always fetch from API with search query
     if (!isSearching) {
       // try to get from local DB (non search case)
       final List<CharacterDto> localCharacters = await _local.getCharacters(page);
@@ -61,6 +60,7 @@ class CharactersRepoImpl implements CharactersRepo {
       }
 
       final List<Character> characters = remoteResult.results.map((CharacterDto e) => e.toEntity()).toList();
+
       return Right(PaginatedResults(results: characters, info: remoteResult.info));
     } on ApiException catch (e) {
       return Left(ApiFailure.fromException(e));

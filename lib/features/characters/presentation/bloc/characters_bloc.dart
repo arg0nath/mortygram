@@ -18,7 +18,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     on<InitialCharactersEvent>(_onInitial);
     on<FetchCharactersEvent>(
       _onFetchCharactersHandler,
-      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).asyncExpand(mapper), //debounce
+      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).asyncExpand(mapper), //debounce for search input
     );
     on<LoadMoreCharactersEvent>(_onLoadMoreHandler);
     on<RefreshCharactersEvent>(_onRefreshHandler);
@@ -44,9 +44,8 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   // fetch characters for a specific page
   Future<void> _onFetchCharactersHandler(FetchCharactersEvent event, Emitter<CharactersState> emit) async {
     final CharacterSearchFilters newFilters = event.filters;
-
-    // Check if filters changed (compare with current state)
     CharacterSearchFilters? currentFilters;
+
     state.maybeWhen(
       loaded: (_, _, _, _, _, CharacterSearchFilters activeFilters) {
         currentFilters = activeFilters;
@@ -54,7 +53,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
       orElse: () {},
     );
 
-    final bool isNewSearch = currentFilters == null || newFilters != currentFilters;
+    final bool isNewSearch = currentFilters == null || newFilters != currentFilters; // check if filters changed
 
     if (isNewSearch) {
       _pageCache.clear();

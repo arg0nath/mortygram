@@ -46,32 +46,12 @@ class CharacterDetailsContent extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             // Character details
-            CharacterInfoItem(
-              label: 'Status',
-              value: characterDetails.status,
-              showStatusIndicator: true,
-            ),
-            CharacterInfoItem(
-              label: 'Species',
-              value: characterDetails.species,
-            ),
-            CharacterInfoItem(
-              label: 'Gender',
-              value: characterDetails.gender,
-            ),
-            CharacterInfoItem(
-              label: 'Origin',
-              value: characterDetails.origin.name,
-            ),
-            CharacterInfoItem(
-              label: 'Location',
-              value: characterDetails.location.name,
-            ),
-            if (characterDetails.firstEpisodeName != null)
-              CharacterInfoItem(
-                label: 'First Episode',
-                value: characterDetails.firstEpisodeName!,
-              ),
+            CharacterInfoItem(label: 'Status', value: characterDetails.status, showStatusIndicator: true),
+            CharacterInfoItem(label: 'Species', value: characterDetails.species),
+            CharacterInfoItem(label: 'Gender', value: characterDetails.gender),
+            CharacterInfoItem(label: 'Origin', value: characterDetails.origin.name),
+            CharacterInfoItem(label: 'Location', value: characterDetails.location.name),
+            if (characterDetails.firstEpisodeName != null) CharacterInfoItem(label: 'First Episode', value: characterDetails.firstEpisodeName!),
             const SizedBox(height: 16),
           ],
         ),

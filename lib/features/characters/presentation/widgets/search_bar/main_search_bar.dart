@@ -6,16 +6,16 @@ import 'package:mortygram/core/common/extensions/context_ext.dart';
 /// A search bar widget that allows users to input a search query
 ///
 /// Mrt stads for Morty, to avoid confusion with the more common "SearchBar"
-class SearchBarMrt extends StatefulWidget {
-  const SearchBarMrt({required this.onSearch, super.key});
+class MainSearchBar extends StatefulWidget {
+  const MainSearchBar({required this.onSearch, super.key});
 
   final void Function(String? value) onSearch;
 
   @override
-  State<SearchBarMrt> createState() => _SearchBarMrtState();
+  State<MainSearchBar> createState() => _MainSearchBarState();
 }
 
-class _SearchBarMrtState extends State<SearchBarMrt> {
+class _MainSearchBarState extends State<MainSearchBar> {
   late TextEditingController textEditingController;
 
   Timer? _debounce;

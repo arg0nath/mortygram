@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/presentation/widgets/filters/filters_button.dart';
+import 'package:mortygram/features/characters/presentation/widgets/search_bar/main_search_bar.dart';
 import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_delegate.dart';
-import 'package:mortygram/features/characters/presentation/widgets/search_bar/search_bar_mrt.dart';
 
 class CharactersSearchFilterBar extends StatelessWidget {
   const CharactersSearchFilterBar({
@@ -24,7 +24,7 @@ class CharactersSearchFilterBar extends StatelessWidget {
           children: [
             Expanded(
               flex: 7,
-              child: SearchBarMrt(
+              child: MainSearchBar(
                 onSearch: (String? query) {
                   onSearchFiltersChanged(currentFilters.copyWith(keyword: query));
                 },
