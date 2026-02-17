@@ -35,7 +35,7 @@ class CharacterInfoItem extends StatelessWidget {
             child: Row(
               spacing: 8,
               children: [
-                if (showStatusIndicator) StatusIndicator(status: value),
+                if (showStatusIndicator) StatusIndicator.fromString(value),
                 Expanded(
                   child: Text(
                     value,

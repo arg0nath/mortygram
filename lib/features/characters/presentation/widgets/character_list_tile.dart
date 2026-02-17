@@ -66,7 +66,7 @@ class CharacterListTile extends StatelessWidget {
                     Row(
                       spacing: 4,
                       children: [
-                        StatusIndicator(status: character.status),
+                        StatusIndicator.fromString(character.status),
                         Text(
                           '${character.status} - ${character.species}',
                           style: context.textTheme.labelSmall,
