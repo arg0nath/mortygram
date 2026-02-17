@@ -32,4 +32,4 @@ import 'package:mortygram/features/on_boarding/domain/usecases/check_first_timer
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'injection_container.dart';
+part 'service_locator.dart';

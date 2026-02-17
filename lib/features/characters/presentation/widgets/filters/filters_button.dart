@@ -32,7 +32,6 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
   @override
   Widget build(BuildContext context) {
     return Badge(
-      backgroundColor: context.colorScheme.secondary,
       largeSize: 10,
       smallSize: 10,
       isLabelVisible: _selectedStatus != null || _selectedGender != null,

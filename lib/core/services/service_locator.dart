@@ -1,13 +1,18 @@
 part of 'di_imports.dart';
 
-final GetIt sl = GetIt.instance;
-
 //Feature
 //bloc first!
 //then usecases
 //repo
 //data source
 //service
+
+// registerFactory creates a new instance every time its requested,
+// while registerLazySingleton creates a single instance that is reused.
+
+// * Dependecy Injection / Service Locator
+
+final GetIt sl = GetIt.instance;
 
 Future<void> injectionInit() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();

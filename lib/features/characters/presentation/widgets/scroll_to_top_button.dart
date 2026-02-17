@@ -11,7 +11,7 @@ class ScrollToTopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.small(
+    return FloatingActionButton(
       onPressed: () => scrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 500),
