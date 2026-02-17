@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cu
 import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_button_bar.dart';
 import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_pages.dart';
 import 'package:mortygram/features/on_boarding/presentation/widgets/on_boarding_slide.dart';
+import 'package:mortygram/features/translations/presentation/widgets/language_selection_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -40,7 +42,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   void _nextPage() {
-    if (_currentPage < onBoardingPages.length - 1) {
+    if (_currentPage < onBoardingPages().length - 1) {
       _pageController.animateToPage(_currentPage + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
       context.read<OnBoardingCubit>().cacheFirstTimer();
@@ -63,10 +65,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          leading: const LanguageSelectionButton(),
           actions: <Widget>[
             TextButton(
               onPressed: _skipToEnd,
-              child: Text('Skip', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400)),
+              child: Text('common.skip'.tr(), style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400)),
             ),
           ],
         ),
@@ -78,9 +81,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: _onPageChanged,
-                  itemCount: onBoardingPages.length,
+                  itemCount: onBoardingPages().length,
                   itemBuilder: (BuildContext context, int index) {
-                    return OnBoardingSlide(data: onBoardingPages[index], index: index);
+                    return OnBoardingSlide(data: onBoardingPages()[index], index: index);
                   },
                 ),
               ),
@@ -90,7 +93,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: AnimatedSmoothIndicator(
                   activeIndex: _currentPage,
-                  count: onBoardingPages.length,
+                  count: onBoardingPages().length,
                   effect: ExpandingDotsEffect(activeDotColor: context.colorScheme.primary, dotHeight: 10, dotWidth: 10, expansionFactor: 3),
                 ),
               ),
@@ -101,7 +104,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
-                  child: OnBoardingButtonBar(currentPage: _currentPage, totalPages: onBoardingPages.length, onNext: _nextPage),
+                  child: OnBoardingButtonBar(currentPage: _currentPage, totalPages: onBoardingPages().length, onNext: _nextPage),
                 ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.3, end: 0, curve: Curves.easeOut),
               ),
               const SizedBox(height: 30),

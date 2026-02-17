@@ -1,0 +1,81 @@
+{
+  "app": {
+    "name": "Mortygram"
+  },
+  "common": {
+    "loading": "Φόρτωση...",
+    "error": "Σφάλμα",
+    "retry": "Επανάληψη",
+    "skip": "Παράλειψη",
+    "ok": "Εντάξει",
+    "cancel": "Ακύρωση",
+    "continue": "Συνέχεια",
+    "getStarted": "Aς ξεκινήσουμε",
+    "unknown": "Άγνωστο"
+  },
+  "bottomNavigation": {
+    "home": "Αρχική",
+    "settings": "Ρυθμίσεις"
+  },
+  "filters": {
+    "filters": "Φίλτρα",
+    "status": "Κατάσταση",
+    "gender": "Φύλο",
+    "clearFilters": "Καθ. φίλτρων",
+    "applyFilters": "Εφαρμογή"
+  },
+  "characters": {
+    "title": "Χαρακτήρες",
+    "search": "Αναζήτηση χαρακτήρων...",
+    "lastKnownLocation": "Τελευταία γνωστή τοποθεσία",
+    "firstSeenIn": "Πρώτη εμφάνιση σε"
+  },
+  "characterDetails": {
+    "status": "Κατάσταση",
+    "species": "Είδος",
+    "gender": "Φύλο",
+    "origin": "Προέλευση",
+    "location": "Τοποθεσία",
+    "firstEpisode": "Πρώτο Επεισόδιο",
+    "shareMessage": "Wubba lubba dub dub! Δείτε τον {name} στο Mortygram!"
+  },
+  "episodes": {
+    "title": "Επεισόδια"
+  },
+  "locations": {
+    "title": "Τοποθεσίες"
+  },
+  "settings": {
+    "title": "Ρυθμίσεις",
+    "theme": "Θέμα",
+    "appearance": "Εμφάνιση",
+    "language": "Γλώσσα"
+  },
+  "about": {
+    "description": "Το Mortygram είναι μια εφαρμογή για φαν του Rick and Morty φτιαγμένη με Flutter.",
+    "credits": "Δεδομένα από το Rick and Morty API. Εικονίδιο εφαρμογής από το Google Gemini. Κινούμενα σχέδια Lottie από το LottieFiles.",
+    "developer": "Ανάπτυξη από τον arg0nath"
+  },
+  "errors": {
+    "connectionTimeout": "Λήξη χρόνου σύνδεσης",
+    "receiveTimeout": "Λήξη χρόνου λήψης",
+    "tooManyRequests": "Στέλνετε αιτήματα πολύ γρήγορα. Δοκιμάστε ξανά σε λίγο.",
+    "invalidStatusCode": "Ελήφθη μη έγκυρος κωδικός κατάστασης: {code}",
+    "connectionError": "Σφάλμα σύνδεσης. Παρακαλώ ελέγξτε τη σύνδεσή σας στο Internet.",
+    "somethingWentWrong": "Κάτι πήγε στραβά Morrrty"
+  },
+  "onboarding": {
+    "page1": {
+      "title": "Wubba Lubba,\nMortygram",
+      "description": "Η πύλη σας στο σύμπαν του Rick and Morty."
+    },
+    "page2": {
+      "title": "Εξερευνήστε το\nMultiverse",
+      "description": "Αναζητήστε, φιλτράρετε και εξερευνήστε λεπτομέρειες χαρακτήρων σε κάθε διάσταση."
+    },
+    "page3": {
+      "title": "Μοιραστείτε την\nΤρέλα",
+      "description": "Μοιραστείτε τους αγαπημένους σας χαρακτήρες και διαδώστε το διαστασιακό χάος."
+    }
+  }
+}

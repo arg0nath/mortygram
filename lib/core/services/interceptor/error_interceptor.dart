@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mortygram/config/logger/my_log.dart';
 
 class ErrorInterceptor extends Interceptor {
@@ -7,19 +8,19 @@ class ErrorInterceptor extends Interceptor {
     String errorMessage;
 
     if (err.type == DioExceptionType.connectionTimeout) {
-      errorMessage = 'Connection Timeout';
+      errorMessage = 'errors.connectionTimeout'.tr();
     } else if (err.type == DioExceptionType.receiveTimeout) {
-      errorMessage = 'Receive Timeout';
+      errorMessage = 'errors.receiveTimeout'.tr();
     } else if (err.type == DioExceptionType.badResponse) {
       if (err.response?.statusCode == 429) {
-        errorMessage = "You're sending requests too fast. Try again shortly.";
+        errorMessage = 'errors.tooManyRequests'.tr();
       } else {
-        errorMessage = 'Received invalid status code: ${err.response?.statusCode}';
+        errorMessage = 'errors.invalidStatusCode'.tr(namedArgs: <String, String>{'code': '${err.response?.statusCode}'});
       }
     } else if (err.type == DioExceptionType.connectionError) {
-      errorMessage = 'Connection Error. Please check your internet connection.';
+      errorMessage = 'errors.connectionError'.tr();
     } else {
-      errorMessage = 'Something went wrong Morrrty';
+      errorMessage = 'errors.somethingWentWrong'.tr();
     }
 
     myLog('Error: $errorMessage', level: .error);

@@ -30,6 +30,12 @@ import 'package:mortygram/features/on_boarding/domain/repos/on_boarding_repo.dar
 import 'package:mortygram/features/on_boarding/domain/usecases/cache_first_timer.dart';
 import 'package:mortygram/features/on_boarding/domain/usecases/check_first_timer.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:mortygram/features/translations/data/datasources/translations_local_data_source.dart';
+import 'package:mortygram/features/translations/data/repos/translations_repo_impl.dart';
+import 'package:mortygram/features/translations/domain/repos/translations_repo.dart';
+import 'package:mortygram/features/translations/domain/usecases/cache_selected_language.dart';
+import 'package:mortygram/features/translations/domain/usecases/get_cached_selected_language.dart';
+import 'package:mortygram/features/translations/presentation/cubit/translations_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'service_locator.dart';

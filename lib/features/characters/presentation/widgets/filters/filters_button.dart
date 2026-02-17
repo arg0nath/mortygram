@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
+import 'package:mortygram/core/common/extensions/string_ext.dart';
 import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
 import 'package:mortygram/features/characters/presentation/widgets/filters/filter_dialog_row.dart';
 
@@ -49,14 +51,14 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
         return StatefulBuilder(
           builder: (BuildContext context, setDialogState) {
             return AlertDialog(
-              title: const Text('Filters'),
+              title: Text('filters.filters'.tr()),
               content: Column(
                 spacing: 16,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   FilterRow(
-                    label: 'Status:',
-                    hintText: 'Status',
+                    label: 'filters.status'.tr() + ':',
+                    hintText: 'filters.status'.tr().toUpperFirst(),
                     initialSelection: _selectedStatus,
                     dropdownMenuEntries: AppConst.statusDropdownEntries,
                     keyPrefix: 'status',
@@ -65,8 +67,8 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                     }),
                   ),
                   FilterRow(
-                    label: 'Gender:',
-                    hintText: 'Gender',
+                    label: 'filters.gender'.tr() + ':',
+                    hintText: 'filters.gender'.tr().toUpperFirst(),
                     initialSelection: _selectedGender,
                     dropdownMenuEntries: AppConst.genderDropdownEntries,
                     keyPrefix: 'gender',
@@ -85,7 +87,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                       _selectedStatus = null;
                     });
                   },
-                  child: Text('Clear Filters', style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.error)),
+                  child: Text('filters.clearFilters'.tr(), style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.error)),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -98,7 +100,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                     );
                     Navigator.pop(context);
                   },
-                  child: const Text('Apply', style: TextStyle(fontWeight: .w800)),
+                  child: Text('filters.applyFilters'.tr(), style: TextStyle(fontWeight: .w800)),
                 ),
               ],
             );

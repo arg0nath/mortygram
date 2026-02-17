@@ -109,6 +109,8 @@ class OnBoardingSlide extends StatelessWidget {
   Widget _buildTitle(BuildContext context) {
     return Text(
           data.title,
+          maxLines: 3,
+          overflow: .ellipsis,
           textAlign: TextAlign.center,
           style: context.textTheme.displaySmall?.copyWith(
             fontWeight: FontWeight.w800,
@@ -129,6 +131,8 @@ class OnBoardingSlide extends StatelessWidget {
     return Text(
           data.description,
           textAlign: TextAlign.center,
+          maxLines: 4,
+          overflow: .ellipsis,
           style: context.textTheme.bodyLarge?.copyWith(
             color: context.colorScheme.onSurface.withAlpha(190),
             height: 1.6,

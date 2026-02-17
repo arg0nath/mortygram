@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 
@@ -17,7 +18,7 @@ class OnBoardingButtonBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            currentPage == totalPages - 1 ? "Get Started" : "Continue",
+            currentPage == totalPages - 1 ? 'common.getStarted'.tr() : 'common.continue'.tr(),
             style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.onPrimary, fontWeight: FontWeight.w700),
           ),
           const SizedBox(width: 8),
