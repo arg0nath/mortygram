@@ -30,6 +30,15 @@
     "lastKnownLocation": "Last known location",
     "firstSeenIn": "First seen in"
   },
+  "characterDetails": {
+    "status": "Status",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "firstEpisode": "First Episode",
+    "shareMessage": "Wubba lubba dub dub! Check out {name} on Mortygram!"
+  },
   "episodes": {
     "title": "Episodes"
   },

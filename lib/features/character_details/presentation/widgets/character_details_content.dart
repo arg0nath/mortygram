@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_network_image.dart';
@@ -46,12 +47,12 @@ class CharacterDetailsContent extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             // Character details
-            CharacterInfoItem(label: 'Status', value: characterDetails.status, showStatusIndicator: true),
-            CharacterInfoItem(label: 'Species', value: characterDetails.species),
-            CharacterInfoItem(label: 'Gender', value: characterDetails.gender),
-            CharacterInfoItem(label: 'Origin', value: characterDetails.origin.name),
-            CharacterInfoItem(label: 'Location', value: characterDetails.location.name),
-            if (characterDetails.firstEpisodeName != null) CharacterInfoItem(label: 'First Episode', value: characterDetails.firstEpisodeName!),
+            CharacterInfoItem(label: 'characterDetails.status'.tr(), value: characterDetails.status, showStatusIndicator: true),
+            CharacterInfoItem(label: 'characterDetails.species'.tr(), value: characterDetails.species),
+            CharacterInfoItem(label: 'characterDetails.gender'.tr(), value: characterDetails.gender),
+            CharacterInfoItem(label: 'characterDetails.origin'.tr(), value: characterDetails.origin.name),
+            CharacterInfoItem(label: 'characterDetails.location'.tr(), value: characterDetails.location.name),
+            if (characterDetails.firstEpisodeName != null) CharacterInfoItem(label: 'characterDetails.firstEpisode'.tr(), value: characterDetails.firstEpisodeName!),
             const SizedBox(height: 16),
           ],
         ),

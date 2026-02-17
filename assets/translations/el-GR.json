@@ -30,6 +30,15 @@
     "lastKnownLocation": "Τελευταία γνωστή τοποθεσία",
     "firstSeenIn": "Πρώτη εμφάνιση σε"
   },
+  "characterDetails": {
+    "status": "Κατάσταση",
+    "species": "Είδος",
+    "gender": "Φύλο",
+    "origin": "Προέλευση",
+    "location": "Τοποθεσία",
+    "firstEpisode": "Πρώτο Επεισόδιο",
+    "shareMessage": "Wubba lubba dub dub! Δείτε τον {name} στο Mortygram!"
+  },
   "episodes": {
     "title": "Επεισόδια"
   },
