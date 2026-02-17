@@ -15,6 +15,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       super(ThemeState.initial()) {
     on<GetThemeEvent>(_onGetThemeEventHandler);
     on<ToggleThemeEvent>(_onToggleThemeEventHandler);
+
+    // Auto-dispatch GetThemeEvent on bloc creation
+    add(const GetThemeEvent());
   }
 
   Future<void> _onGetThemeEventHandler(GetThemeEvent event, Emitter<ThemeState> emit) async {
