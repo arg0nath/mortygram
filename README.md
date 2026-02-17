@@ -34,10 +34,8 @@ lib/
 
 ## 🛠️ Tech Stack
 
-### Core
-- **Flutter SDK & Dart**
-
-### State Management
+### Core & State Management
+- **Flutter SDK & Dart, bloc**
 
 ### Build Commands
 
