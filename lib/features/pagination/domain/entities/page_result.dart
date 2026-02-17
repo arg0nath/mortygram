@@ -1,13 +1,21 @@
-class PaginatedResults<T> {
-  final List<T> items;
-  final int currentPage;
-  final int lastPage;
+import 'package:mortygram/config/typedefs/typedefs.dart';
+import 'package:mortygram/features/pagination/domain/entities/pagination_meta.dart';
 
+class PaginatedResults<T> {
   PaginatedResults({
-    required this.items,
-    required this.currentPage,
-    required this.lastPage,
+    required this.results,
+    required this.info,
   });
 
-  bool get isLastPage => currentPage >= lastPage;
+  final List<T> results;
+  final PaginationMeta info;
+
+  factory PaginatedResults.fromJson(DataMap json, T Function(DataMap) fromJsonT) {
+    final List<T> results = (json['results'] as List).map((dynamic item) => fromJsonT(item as DataMap)).toList();
+
+    return PaginatedResults(
+      results: results,
+      info: PaginationMeta.fromJson(json['info'] as DataMap),
+    );
+  }
 }

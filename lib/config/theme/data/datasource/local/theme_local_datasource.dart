@@ -28,8 +28,8 @@ class ThemeLocalDatasourceImpl implements ThemeLocalDataSource {
   Future<ThemeEntity> getThemePreference() async {
     final String? themeValue = _sharedPreferences.getString('theme_key');
     if (themeValue == null) {
-      await _sharedPreferences.setString('theme_key', 'light');
-      return const ThemeEntity(themeType: ThemeType.light);
+      await _sharedPreferences.setString('theme_key', 'dark');
+      return const ThemeEntity(themeType: ThemeType.dark);
     }
     return ThemeEntity(themeType: themeValue == 'light' ? ThemeType.light : ThemeType.dark);
   }

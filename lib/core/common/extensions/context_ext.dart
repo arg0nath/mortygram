@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
 extension ContextExtension on BuildContext {
-  /* void showSnackBar(String message, {bool isError = false}) {
-    ScaffoldMessenger.of(this)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(message),backgroundColor: isError ? Theme.of(this).colorScheme.error : Theme.of(this).snackBarTheme.backgroundColor,),);
-  } */
+  void showSnackBar(String message, {bool isError = false}) {
+    ScaffoldMessenger.of(this)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(message),
+          backgroundColor: isError ? Theme.of(this).colorScheme.error : Theme.of(this).snackBarTheme.backgroundColor,
+        ),
+      );
+  }
 
   ThemeData get theme => Theme.of(this);
 

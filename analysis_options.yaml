@@ -9,14 +9,13 @@ linter:
   rules:
     public_member_api_docs: ignore
     require_trailing_commas: true
-    trailing_commas: preserve
     type_annotate_public_apis: true
-    always_specify_types: true
     always_put_required_named_parameters_first: true
     unnecessary_string_interpolations: true
     unnecessary_null_aware_assignments: true
     unnecessary_brace_in_string_interps: true
     avoid_unnecessary_containers: true
-    
+    use_named_constants: true
+    prefer_const_constructors: true
 
     

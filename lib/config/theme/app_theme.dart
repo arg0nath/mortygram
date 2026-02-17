@@ -33,7 +33,9 @@ abstract final class AppTheme {
       snackBarElevation: 6,
       snackBarBackgroundSchemeColor: SchemeColor.inverseSurface,
       navigationRailUseIndicator: true,
+      inputDecoratorRadius: 12,
     ),
+
     // ColorScheme seed generation configuration for light mode.
     keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true, useError: true),
     // Direct ThemeData properties.
@@ -57,6 +59,7 @@ abstract final class AppTheme {
       snackBarElevation: 6,
       snackBarBackgroundSchemeColor: SchemeColor.inverseSurface,
       navigationRailUseIndicator: true,
+      inputDecoratorRadius: 12,
     ),
     // ColorScheme seed configuration setup for dark mode.
     keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true, useError: true),
