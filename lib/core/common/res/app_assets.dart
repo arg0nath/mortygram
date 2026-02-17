@@ -6,6 +6,7 @@ class AppAssets {
   static const String githubLogoSvg = '$_svgsBasePath/github.svg';
   //lottie
   static const String errorAnimation = '$_lottiesBasePath/error.json';
+  static const String emptyListAnimation = '$_lottiesBasePath/ufo.json';
   static const String loadingAnimation = '$_lottiesBasePath/rick.json';
 
   static const String fontFamily = 'Quicksand';

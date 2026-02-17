@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mortygram/core/common/res/app_assets.dart';
 import 'package:mortygram/features/characters/domain/entities/character.dart';
 import 'package:mortygram/features/characters/presentation/widgets/character_list_tile.dart';
 
@@ -24,10 +26,10 @@ class CharacterSliverList extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           if (index < characters.length) {
-            return Hero(
-              tag: 'character_image_${characters[index].id}',
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+            return Padding(
+              padding: const .all(8.0),
+              child: Hero(
+                tag: 'character_image_${characters[index].id}',
                 child: CharacterListTile(
                   key: ValueKey('character_${characters[index].id}'),
                   character: characters[index],
@@ -39,7 +41,7 @@ class CharacterSliverList extends StatelessWidget {
           //loading indicator at the end of the list when loading more characters
           if (index == characters.length && isLoadingMore) {
             return const Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: .all(16.0),
               child: Center(child: CircularProgressIndicator()),
             );
           }
@@ -60,10 +62,18 @@ class _EmptySliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverFillRemaining(
+    return SliverFillRemaining(
       hasScrollBody: false,
       child: Center(
-        child: Text('No characters found.'),
+        child: Column(
+          spacing: 24,
+          crossAxisAlignment: .center,
+          mainAxisAlignment: .center,
+          children: [
+            LottieBuilder.asset(AppAssets.emptyListAnimation, repeat: true, height: 150, width: 150),
+            const Text('No characters found.'),
+          ],
+        ),
       ),
     );
   }
