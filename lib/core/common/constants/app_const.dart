@@ -22,6 +22,11 @@ class AppConst {
     Locale('el', 'GR'),
   ];
 
+  static const Map<String, String> languageNames = <String, String>{
+    'en': 'English',
+    'el': 'Ελληνικά',
+  };
+
   static const int emptyInt = 0;
   static const double emptyDouble = 0.0;
   static const String emptyGuid = '00000000-0000-0000-0000-000000000000';

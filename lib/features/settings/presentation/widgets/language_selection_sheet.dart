@@ -18,10 +18,6 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
   // Supported locales for the app
 
   // Language display names in their native form
-  static const Map<String, String> _languageNames = <String, String>{
-    'en': 'English',
-    'el': 'Ελληνικά',
-  };
 
   @override
   void didChangeDependencies() {
@@ -71,7 +67,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
           const SizedBox(height: 16),
           ...AppConst.supportedLocales.map((Locale locale) {
             final String langCode = locale.languageCode;
-            final String displayName = _languageNames[langCode] ?? langCode.toUpperCase();
+            final String displayName = AppConst.languageNames[langCode] ?? langCode.toUpperCase();
             final bool isSelected = langCode == _selectedLanguageCode;
 
             return RadioListTile<String>(

@@ -1,15 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/features/settings/presentation/widgets/language_selection_sheet.dart';
 
 class LanguageSelectionTile extends StatelessWidget {
   const LanguageSelectionTile({super.key});
-
-  // Language display names in their native form
-  static const Map<String, String> _languageNames = <String, String>{
-    'en': 'English',
-    'el': 'Ελληνικά',
-  };
 
   void _showLanguageSheet(BuildContext context) {
     showModalBottomSheet<void>(
@@ -25,7 +20,7 @@ class LanguageSelectionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String currentLanguageCode = context.locale.languageCode;
-    final String displayName = _languageNames[currentLanguageCode] ?? currentLanguageCode.toUpperCase();
+    final String displayName = AppConst.languageNames[currentLanguageCode] ?? currentLanguageCode.toUpperCase();
 
     return ListTile(
       leading: const Icon(Icons.translate_rounded),

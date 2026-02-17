@@ -6,10 +6,6 @@ import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/features/translations/presentation/cubit/translations_cubit.dart';
 
 // Language display names in their native form
-const Map<String, String> _languageNames = <String, String>{
-  'en': 'English',
-  'el': 'Ελληνικά',
-};
 
 class LanguageSelectionButton extends StatefulWidget {
   const LanguageSelectionButton({super.key});
@@ -42,7 +38,7 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
       items: AppConst.supportedLocales.map((Locale locale) {
         final String langCode = locale.languageCode;
         final bool isSelected = locale.languageCode == currentLocale.languageCode;
-        final String displayName = _languageNames[langCode] ?? langCode.toUpperCase();
+        final String displayName = AppConst.languageNames[langCode] ?? langCode.toUpperCase();
 
         return PopupMenuItem<Locale>(
           value: locale,
@@ -77,8 +73,6 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
   @override
   Widget build(BuildContext context) {
     final Locale currentLocale = context.locale;
-    final String langCode = currentLocale.languageCode;
-    final String displayName = _languageNames[langCode] ?? langCode.toUpperCase();
 
     return IconButton(
       key: _buttonKey,
