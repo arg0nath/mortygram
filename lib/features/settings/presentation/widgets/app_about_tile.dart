@@ -10,7 +10,7 @@ class AppAboutTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return AboutListTile(
       applicationName: AppConst.appName,
-
+      icon: const Icon(Icons.info_outline_rounded),
       applicationIcon: Image.asset(AppAssets.mortygramLogoPng, width: 50, height: 50),
       aboutBoxChildren: const <Widget>[
         Text('Mortygram is a Rick and Morty fan app built with Flutter.'),
