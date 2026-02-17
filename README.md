@@ -17,7 +17,7 @@ The app follows **Clean Architecture** principles with a clear separation of con
 
 ```
 lib/
-├── features/          # Feature modules (characters, episodes, locations, etc.)
+├── features/          # Feature modules (characters, episodes, etc.)
 ├── core/
 │   ├── common/       # Shared utilities and constants
 │   ├── database/     # Drift database implementation
