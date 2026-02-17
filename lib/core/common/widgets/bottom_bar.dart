@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,9 +25,9 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
       },
       showUnselectedLabels: true,
       currentIndex: widget.navigationShell.currentIndex,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(activeIcon: Icon(FluentIcons.home_12_filled), icon: Icon(FluentIcons.home_12_regular), label: 'Home'),
-        BottomNavigationBarItem(activeIcon: Icon(FluentIcons.settings_16_filled), icon: Icon(FluentIcons.settings_16_regular), label: 'Settings'),
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(activeIcon: const Icon(FluentIcons.home_12_filled), icon: const Icon(FluentIcons.home_12_regular), label: 'bottomNavigation.home'.tr()),
+        BottomNavigationBarItem(activeIcon: const Icon(FluentIcons.settings_16_filled), icon: const Icon(FluentIcons.settings_16_regular), label: 'bottomNavigation.settings'.tr()),
       ],
     );
   }

@@ -1,0 +1,72 @@
+{
+  "app": {
+    "name": "Mortygram"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "skip": "Skip",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "getStarted": "Get Started",
+    "unknown": "Unknown"
+  },
+  "bottomNavigation": {
+    "home": "Home",
+    "settings": "Settings"
+  },
+  "filters": {
+    "filters": "Filters",
+    "status": "Status",
+    "gender": "Gender",
+    "clearFilters": "Clear filters",
+    "applyFilters": "Apply"
+  },
+  "characters": {
+    "title": "Characters",
+    "search": "Search characters...",
+    "lastKnownLocation": "Last known location",
+    "firstSeenIn": "First seen in"
+  },
+  "episodes": {
+    "title": "Episodes"
+  },
+  "locations": {
+    "title": "Locations"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "appearance": "Appearance",
+    "language": "Language"
+  },
+  "about": {
+    "description": "Mortygram is a Rick and Morty fan app built with Flutter.",
+    "credits": "Data provided by the Rick and Morty API. App icon by Google Gemini. Lottie animations by LottieFiles.",
+    "developer": "Developed by arg0nath"
+  },
+  "errors": {
+    "connectionTimeout": "Connection Timeout",
+    "receiveTimeout": "Receive Timeout",
+    "tooManyRequests": "You're sending requests too fast. Try again shortly.",
+    "invalidStatusCode": "Received invalid status code: {code}",
+    "connectionError": "Connection Error. Please check your internet connection.",
+    "somethingWentWrong": "Something went wrong Morrrty"
+  },
+  "onboarding": {
+    "page1": {
+      "title": "Wubba Lubba,\nMortygram",
+      "description": "Your portal to the Rick and Morty universe."
+    },
+    "page2": {
+      "title": "Explore the\nMultiverse",
+      "description": "Search, filter, and dive into character details across every dimension."
+    },
+    "page3": {
+      "title": "Share the\nMadness",
+      "description": "Show off your favorite characters and spread the interdimensional chaos."
+    }
+  }
+}

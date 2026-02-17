@@ -5,6 +5,7 @@ class AppConst {
   // #region // * Shared Preferences Keys
   static const String kFirstTimerKey = 'first_timer';
   static const String kIsFirstTimeUser = 'is_first_time_user';
+  static const String kSelectedLanguageKey = 'selected_language';
   // #endregion
 
   static const String appName = 'Mortygram';
@@ -15,6 +16,11 @@ class AppConst {
   static const String characterEpisodeApiUrl = '/episode';
 
   static const int retryMaxAttempts = 2;
+
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en', 'US'),
+    Locale('el', 'GR'),
+  ];
 
   static const int emptyInt = 0;
   static const double emptyDouble = 0.0;

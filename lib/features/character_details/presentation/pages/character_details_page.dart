@@ -45,7 +45,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
         },
         builder: (BuildContext context, CharacterDetailsState state) {
           return state.when(
-            initial: () => const SizedBox.shrink(),
+            initial: () => const Center(child: CustomLoadingIndicator()),
             loading: () => const Center(child: CustomLoadingIndicator()),
             loaded: (characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
             error: (String message) => ErrorPage(

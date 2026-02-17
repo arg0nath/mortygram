@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mortygram/config/theme/domain/entity/theme_entity.dart';
@@ -10,7 +11,7 @@ class ThemeToggleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.palette_outlined),
-      title: const Text('Appereance'),
+      title: Text('settings.appearance'.tr()),
       trailing: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {
           final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
