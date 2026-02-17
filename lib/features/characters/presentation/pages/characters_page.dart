@@ -106,7 +106,7 @@ class _CharactersPageState extends State<CharactersPage> {
                     },
                   ),
                   state.when(
-                    initial: () => const SliverFillRemaining(child: SizedBox.shrink()),
+                    initial: () => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
                     loading: (bool isSearching, String? searchQuery) => const SliverFillRemaining(child: Center(child: CustomLoadingIndicator())),
                     loaded: (List<Character> characters, _, _, bool isLoadingMore, String? loadMoreError, _) {
                       return CharacterSliverList(
