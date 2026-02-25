@@ -18,7 +18,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     on<InitialCharactersEvent>(_onInitial);
     on<FetchCharactersEvent>(
       _onFetchCharactersHandler,
-      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).asyncExpand(mapper), //debounce for search input
+      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).switchMap(mapper), //debounce for search input
     );
     on<LoadMoreCharactersEvent>(_onLoadMoreHandler);
     on<RefreshCharactersEvent>(_onRefreshHandler);
