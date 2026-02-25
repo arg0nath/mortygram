@@ -8,6 +8,7 @@ import 'package:mortygram/core/routes/route_names.dart';
 import 'package:mortygram/core/services/di_imports.dart';
 import 'package:mortygram/features/character_details/presentation/bloc/character_details_bloc.dart';
 import 'package:mortygram/features/character_details/presentation/pages/character_details_page.dart';
+import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:mortygram/features/characters/presentation/pages/characters_page.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:mortygram/features/on_boarding/presentation/pages/on_boarding_page.dart';
@@ -52,7 +53,10 @@ final GoRouter router = GoRouter(
             customGoRoute(
               path: RoutePath.charactersPage,
               name: RouteName.charactersPageName,
-              builder: (BuildContext context, GoRouterState state) => const CharactersPage(),
+              builder: (BuildContext context, GoRouterState state) => BlocProvider<CharactersBloc>(
+                create: (context) => sl<CharactersBloc>(),
+                child: const CharactersPage(),
+              ),
               routes: <GoRoute>[
                 // * ---------- Character Details Page ----------
                 customGoRoute(
