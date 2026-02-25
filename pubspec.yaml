@@ -75,7 +75,6 @@ flutter:
   generate: true
   assets:
     - .env
-    - assets/images/
     - assets/svgs/
     - assets/lotties/
     - assets/icon/
