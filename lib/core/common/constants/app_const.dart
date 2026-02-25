@@ -44,19 +44,5 @@ class AppConst {
   static const double scrollOffsetThreshold = 200.0;
   static const double loadMoreThreshold = 200.0;
 
-  //* Dropdown entries for filters
-  static const List<DropdownMenuEntry<String>> genderDropdownEntries = <DropdownMenuEntry<String>>[
-    DropdownMenuEntry<String>(value: 'female', label: 'Female'),
-    DropdownMenuEntry<String>(value: 'male', label: 'Male'),
-    DropdownMenuEntry<String>(value: 'genderless', label: 'Genderless'),
-    DropdownMenuEntry<String>(value: 'unknown', label: 'unknown'),
-  ];
-
-  static const List<DropdownMenuEntry<String>> statusDropdownEntries = <DropdownMenuEntry<String>>[
-    DropdownMenuEntry<String>(value: 'alive', label: 'Alive'),
-    DropdownMenuEntry<String>(value: 'dead', label: 'Dead'),
-    DropdownMenuEntry<String>(value: 'unknown', label: 'Unknown'),
-  ];
-
   static const String githubUrl = 'https://github.com/arg0nath';
 }
