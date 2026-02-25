@@ -25,14 +25,15 @@ class CharactersRepoImpl implements CharactersRepo {
   @override
   ResultFuture<PaginatedResults<Character>> getCharacters({
     required int page,
+    bool? isRefresh,
     String? keyword,
     String? genderFilter,
     String? statusFilter,
   }) async {
     final bool isSearching = keyword != null && keyword.isNotEmpty || genderFilter != null && genderFilter.isNotEmpty || statusFilter != null && statusFilter.isNotEmpty;
-
+    final bool isRefreshing = isRefresh ?? false;
     //skip local DB when searching - always fetch from API with search query
-    if (!isSearching) {
+    if (!isSearching && !isRefreshing) {
       // try to get from local DB (non search case)
       final List<CharacterDto> localCharacters = await _local.getCharacters(page);
       final PaginationMeta? localMeta = await _local.getPaginationMeta(AppConst.charactersApiUrl, page);
@@ -54,7 +55,7 @@ class CharactersRepoImpl implements CharactersRepo {
       );
 
       // cache characters and pagination metadata (only for non-search)
-      if (!isSearching) {
+      if (!isSearching && !isRefreshing) {
         await _local.cacheCharacters(remoteResult.results);
         await _local.cachePaginationMeta(AppConst.charactersApiUrl, page, remoteResult.info);
       }
