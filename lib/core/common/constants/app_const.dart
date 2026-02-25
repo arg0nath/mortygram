@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 
 class AppConst {
   AppConst._(); // Prevent instantiation
-  // #region // * Shared Preferences Keys
-  static const String kFirstTimerKey = 'first_timer';
-  static const String kIsFirstTimeUser = 'is_first_time_user';
-  static const String kSelectedLanguageKey = 'selected_language';
-  // #endregion
 
   static const String appName = 'Mortygram';
 
@@ -14,6 +9,10 @@ class AppConst {
   static const String characterDetailsApiUrl = '/character';
   static const String characterLocationApiUrl = '/location';
   static const String characterEpisodeApiUrl = '/episode';
+
+  static const String darkThemeKey = 'dark';
+  static const String lightThemeKey = 'light';
+  static const String isFirstTimerKey = 'isFirstTimer';
 
   static const int retryMaxAttempts = 2;
 

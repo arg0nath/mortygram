@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/config/theme/presentation/app_palette.dart';
 import 'package:mortygram/core/common/res/app_assets.dart';
-import 'package:mortygram/features/on_boarding/domain/entities/on_boarding_data.dart';
+import 'package:mortygram/features/on_boarding/presentation/models/on_boarding_data.dart';
 
 List<OnBoardingData> onBoardingPages() => <OnBoardingData>[
   OnBoardingData(

@@ -76,13 +76,7 @@ class _CharactersPageState extends State<CharactersPage> {
     context.read<CharactersBloc>().add(const RefreshCharactersEvent());
 
     //The .skip(1) ensures it waits for the next emission (after refresh) rather than matching the current state.
-    await context
-        .read<CharactersBloc>()
-        .stream
-        .skip(1)
-        .firstWhere(
-          (state) => state.maybeWhen(loaded: (_, _, _, _, _, _) => true, error: (_) => true, orElse: () => false),
-        );
+    await context.read<CharactersBloc>().stream.skip(1).firstWhere((state) => state.maybeWhen(loaded: (_, _, _, _, _, _) => true, error: (_) => true, orElse: () => false));
   }
 
   @override

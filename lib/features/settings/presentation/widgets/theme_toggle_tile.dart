@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mortygram/config/theme/domain/entity/theme_entity.dart';
-import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
+import 'package:mortygram/config/theme/presentation/cubit/theme_cubit.dart';
+import 'package:mortygram/core/common/constants/app_const.dart';
 
 class ThemeToggleTile extends StatelessWidget {
   const ThemeToggleTile({super.key});
@@ -12,12 +12,12 @@ class ThemeToggleTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.palette_outlined),
       title: Text('settings.appearance'.tr()),
-      trailing: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (BuildContext context, ThemeState state) {
-          final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
+      trailing: BlocBuilder<ThemeCubit, String>(
+        builder: (BuildContext context, String themeMode) {
+          final bool isDarkMode = themeMode == AppConst.darkThemeKey;
           return Switch.adaptive(
             value: isDarkMode,
-            onChanged: (bool value) => context.read<ThemeBloc>().add(ToggleThemeEvent(value)),
+            onChanged: (bool value) => context.read<ThemeCubit>().setTheme(value ? AppConst.darkThemeKey : AppConst.lightThemeKey),
             thumbIcon: WidgetStatePropertyAll(Icon(isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded)),
           );
         },
