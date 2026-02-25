@@ -12,16 +12,14 @@ class InitialCharactersEvent extends CharactersEvent {
 }
 
 class FetchCharactersEvent extends CharactersEvent {
-  const FetchCharactersEvent({
-    required this.page,
-    this.filters = const CharacterSearchFilters(),
-  });
+  const FetchCharactersEvent({required this.page, this.filters = const CharacterSearchFilters(), this.isRefresh});
 
   final int page;
   final CharacterSearchFilters filters;
+  final bool? isRefresh;
 
   @override
-  List<Object?> get props => <Object?>[page, filters];
+  List<Object?> get props => <Object?>[page, isRefresh, filters];
 }
 
 class LoadMoreCharactersEvent extends CharactersEvent {

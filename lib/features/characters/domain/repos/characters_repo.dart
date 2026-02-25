@@ -8,5 +8,6 @@ abstract interface class CharactersRepo {
     String? keyword,
     String? genderFilter,
     String? statusFilter,
+    bool? isRefresh,
   });
 }
