@@ -62,7 +62,9 @@
     "tooManyRequests": "You're sending requests too fast. Try again shortly.",
     "invalidStatusCode": "Received invalid status code: {code}",
     "connectionError": "Connection Error. Please check your internet connection.",
-    "somethingWentWrong": "Something went wrong Morrrty"
+    "somethingWentWrong": "Something went wrong Morrrty",
+    "refresh": "Refresh",
+    "pleasewait": "Please wait a moment before refreshing again"
   },
   "onboarding": {
     "page1": {

@@ -62,7 +62,9 @@
     "tooManyRequests": "Στέλνετε αιτήματα πολύ γρήγορα. Δοκιμάστε ξανά σε λίγο.",
     "invalidStatusCode": "Ελήφθη μη έγκυρος κωδικός κατάστασης: {code}",
     "connectionError": "Σφάλμα σύνδεσης. Παρακαλώ ελέγξτε τη σύνδεσή σας στο Internet.",
-    "somethingWentWrong": "Κάτι πήγε στραβά Morrrty"
+    "somethingWentWrong": "Κάτι πήγε στραβά Morrrty",
+    "refresh": "Ανανέωση",
+    "pleasewait": "Παρακαλώ περιμένετε λίγο πριν ανανεώσετε ξανά"
   },
   "onboarding": {
     "page1": {
