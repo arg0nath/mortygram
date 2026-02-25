@@ -16,16 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<TranslationsCubit>(create: (BuildContext context) => sl<TranslationsCubit>()..getCachedSelectedLanguage()),
+        BlocProvider<TranslationsCubit>(create: (BuildContext context) => sl<TranslationsCubit>()),
         BlocProvider<ThemeCubit>(create: (BuildContext context) => sl<ThemeCubit>()),
       ],
-      child: BlocListener<TranslationsCubit, TranslationsState>(
-        listener: (BuildContext context, TranslationsState state) {
-          // When cached language is loaded, set it as the active locale
-          if (state is SelectedLanguageLoaded) {
-            final Locale newLocale = state.languageCode == 'el' ? const Locale('el', 'GR') : const Locale('en', 'US');
-            context.setLocale(newLocale);
-          }
+      child: BlocListener<TranslationsCubit, String>(
+        listener: (BuildContext context, String languageCode) {
+          // When language changes, set it as the active locale
+          final Locale newLocale = languageCode == 'el' ? const Locale('el', 'GR') : const Locale('en', 'US');
+          context.setLocale(newLocale);
         },
         child: BlocBuilder<ThemeCubit, String>(
           builder: (BuildContext context, String themeMode) {

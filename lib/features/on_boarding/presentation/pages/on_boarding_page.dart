@@ -52,7 +52,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     return BlocListener<OnBoardingCubit, bool>(
       listener: (BuildContext context, bool isFirstTimer) {
         if (!isFirstTimer) {
-          context.goNamed(RouteName.charactersPageName);
+          // Schedule navigation for next frame to allow emit to complete
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (context.mounted) context.goNamed(RouteName.charactersPageName);
+          });
         }
       },
       child: Scaffold(

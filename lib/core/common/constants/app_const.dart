@@ -13,6 +13,7 @@ class AppConst {
   static const String darkThemeKey = 'dark';
   static const String lightThemeKey = 'light';
   static const String isFirstTimerKey = 'isFirstTimer';
+  static const String selectedLanguageKey = 'selectedLanguage';
 
   static const int retryMaxAttempts = 2;
 

@@ -65,7 +65,7 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
 
       // Cache the selected language using the translations cubit
       if (context.mounted) {
-        context.read<TranslationsCubit>().cacheSelectedLanguage(selected.languageCode);
+        context.read<TranslationsCubit>().setLanguage(selected.languageCode);
       }
     }
   }

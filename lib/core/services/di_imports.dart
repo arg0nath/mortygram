@@ -20,11 +20,6 @@ import 'package:mortygram/features/characters/domain/usecases/get_characters.dar
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:mortygram/features/episodes/data/datasource/remote/episodes_remote_data_source.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
-import 'package:mortygram/features/translations/data/datasources/translations_local_data_source.dart';
-import 'package:mortygram/features/translations/data/repos/translations_repo_impl.dart';
-import 'package:mortygram/features/translations/domain/repos/translations_repo.dart';
-import 'package:mortygram/features/translations/domain/usecases/cache_selected_language.dart';
-import 'package:mortygram/features/translations/domain/usecases/get_cached_selected_language.dart';
 import 'package:mortygram/features/translations/presentation/cubit/translations_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

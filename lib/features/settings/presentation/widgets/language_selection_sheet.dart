@@ -36,7 +36,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
 
     // Cache the selected language using the translations cubit
     if (mounted) {
-      context.read<TranslationsCubit>().cacheSelectedLanguage(_selectedLanguageCode);
+      context.read<TranslationsCubit>().setLanguage(_selectedLanguageCode);
 
       // Close the bottom sheet
       Navigator.of(context).pop();
