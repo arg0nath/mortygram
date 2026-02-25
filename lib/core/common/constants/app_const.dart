@@ -15,6 +15,9 @@ class AppConst {
   static const String characterLocationApiUrl = '/location';
   static const String characterEpisodeApiUrl = '/episode';
 
+  static const String darkThemeKey = 'dark';
+  static const String lightThemeKey = 'light';
+
   static const int retryMaxAttempts = 2;
 
   static const List<Locale> supportedLocales = <Locale>[

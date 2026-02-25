@@ -58,6 +58,7 @@ dependencies:
   very_good_analysis: ^10.1.0
   stream_transform: ^2.1.1
   easy_localization: ^3.0.8
+  hydrated_bloc: ^10.1.1
 
 dev_dependencies:
   flutter_test:

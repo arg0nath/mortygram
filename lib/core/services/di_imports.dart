@@ -1,10 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mortygram/config/theme/data/datasource/local/theme_local_datasource.dart';
-import 'package:mortygram/config/theme/data/repository/theme_repo_impl.dart';
-import 'package:mortygram/config/theme/domain/repository/theme_repo.dart';
-import 'package:mortygram/config/theme/domain/usecase/get_theme_usecase.dart';
-import 'package:mortygram/config/theme/domain/usecase/set_theme_usecase.dart';
 import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
 import 'package:mortygram/core/common/envs/app_envs.dart';
 import 'package:mortygram/core/database/app_database.dart';
