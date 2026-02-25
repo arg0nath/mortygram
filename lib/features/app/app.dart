@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mortygram/config/theme/theme.dart';
 import 'package:mortygram/core/routes/go_router.dart';
 import 'package:mortygram/core/services/di_imports.dart';
-import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:nested/nested.dart';
 
 import '../translations/translations.dart';
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
       providers: <SingleChildWidget>[
         BlocProvider<TranslationsCubit>(create: (BuildContext context) => sl<TranslationsCubit>()..getCachedSelectedLanguage()),
         BlocProvider<ThemeBloc>(create: (BuildContext context) => sl<ThemeBloc>()),
-        BlocProvider<CharactersBloc>(create: (BuildContext context) => sl<CharactersBloc>()),
       ],
       child: BlocListener<TranslationsCubit, TranslationsState>(
         listener: (BuildContext context, TranslationsState state) {
