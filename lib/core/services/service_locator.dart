@@ -42,11 +42,7 @@ Future<void> injectionInit() async {
     // * Theme
     ..registerLazySingleton(() => ThemeCubit())
     // * On boarding
-    ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
-    ..registerLazySingleton(() => CacheFirstTimer(sl()))
-    ..registerLazySingleton(() => CheckFirstTimer(sl()))
-    ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
-    ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
+    ..registerLazySingleton(() => OnBoardingCubit())
     // * Characters
     ..registerFactory(() => CharactersBloc(getCharacters: sl()))
     ..registerLazySingleton(() => GetCharacters(sl()))

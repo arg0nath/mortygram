@@ -24,12 +24,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   int _currentPage = 0;
 
   @override
-  void initState() {
-    context.read<OnBoardingCubit>().checkIfUserFirstTimer();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -45,19 +39,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     if (_currentPage < onBoardingPages().length - 1) {
       _pageController.animateToPage(_currentPage + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
-      context.read<OnBoardingCubit>().cacheFirstTimer();
+      context.read<OnBoardingCubit>().completeOnboarding();
     }
   }
 
   void _skipToEnd() {
-    context.read<OnBoardingCubit>().cacheFirstTimer();
+    context.read<OnBoardingCubit>().completeOnboarding();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OnBoardingCubit, OnBoardingState>(
-      listener: (BuildContext context, OnBoardingState state) {
-        if ((state is OnBoardingStatus && !state.isFirstTimer) || (state is UserCached)) {
+    return BlocListener<OnBoardingCubit, bool>(
+      listener: (BuildContext context, bool isFirstTimer) {
+        if (!isFirstTimer) {
           context.goNamed(RouteName.charactersPageName);
         }
       },

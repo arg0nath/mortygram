@@ -21,9 +21,7 @@ void main() async {
 
   // Initialize HydratedBloc storage
   final storage = await HydratedStorage.build(
-    storageDirectory: HydratedStorageDirectory(
-      (await getApplicationDocumentsDirectory()).path,
-    ),
+    storageDirectory: HydratedStorageDirectory((await getApplicationDocumentsDirectory()).path),
   );
   HydratedBloc.storage = storage;
 
