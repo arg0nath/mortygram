@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
+import 'package:mortygram/config/theme/presentation/cubit/theme_cubit.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
 
 class ThemeToggleButton extends StatefulWidget {
