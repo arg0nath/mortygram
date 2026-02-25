@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/extensions/string_ext.dart';
 import 'package:mortygram/features/characters/domain/entities/character_search_filters.dart';
@@ -60,7 +59,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                     label: 'filters.status'.tr() + ':',
                     hintText: 'filters.status'.tr().toUpperFirst(),
                     initialSelection: _selectedStatus,
-                    dropdownMenuEntries: AppConst.statusDropdownEntries,
+                    dropdownMenuEntries: _statusDropdownEntries,
                     keyPrefix: 'status',
                     onSelected: (String? value) => setDialogState(() {
                       _selectedStatus = value;
@@ -70,7 +69,7 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
                     label: 'filters.gender'.tr() + ':',
                     hintText: 'filters.gender'.tr().toUpperFirst(),
                     initialSelection: _selectedGender,
-                    dropdownMenuEntries: AppConst.genderDropdownEntries,
+                    dropdownMenuEntries: _genderDropdownEntries,
                     keyPrefix: 'gender',
                     onSelected: (String? value) => setDialogState(() {
                       _selectedGender = value;
@@ -110,3 +109,17 @@ class _FiltersDialogButtonState extends State<FiltersDialogButton> {
     );
   }
 }
+
+//* Dropdown entries for filters
+const List<DropdownMenuEntry<String>> _genderDropdownEntries = <DropdownMenuEntry<String>>[
+  DropdownMenuEntry<String>(value: 'female', label: 'Female'),
+  DropdownMenuEntry<String>(value: 'male', label: 'Male'),
+  DropdownMenuEntry<String>(value: 'genderless', label: 'Genderless'),
+  DropdownMenuEntry<String>(value: 'unknown', label: 'unknown'),
+];
+
+const List<DropdownMenuEntry<String>> _statusDropdownEntries = <DropdownMenuEntry<String>>[
+  DropdownMenuEntry<String>(value: 'alive', label: 'Alive'),
+  DropdownMenuEntry<String>(value: 'dead', label: 'Dead'),
+  DropdownMenuEntry<String>(value: 'unknown', label: 'Unknown'),
+];
