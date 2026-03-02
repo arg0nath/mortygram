@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -72,7 +74,9 @@ class _CharactersPageState extends State<CharactersPage> {
 
   Future<void> _handleRefresh() async {
     context.read<CharactersBloc>().add(const RefreshCharactersEvent());
-    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    //The .skip(1) ensures it waits for the next emission (after refresh) rather than matching the current state.
+    await context.read<CharactersBloc>().stream.skip(1).firstWhere((state) => state.maybeWhen(loaded: (_, _, _, _, _, _) => true, error: (_) => true, orElse: () => false));
   }
 
   @override

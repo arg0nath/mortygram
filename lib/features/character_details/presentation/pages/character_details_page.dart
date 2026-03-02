@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
 import 'package:mortygram/core/common/widgets/custom_loading_indicator.dart';
 import 'package:mortygram/core/common/widgets/error_page.dart';
+import 'package:mortygram/features/character_details/domain/entities/character_details.dart';
 import 'package:mortygram/features/character_details/presentation/bloc/character_details_bloc.dart';
 import 'package:mortygram/features/character_details/presentation/widgets/character_details_app_bar.dart';
 import 'package:mortygram/features/character_details/presentation/widgets/character_details_content.dart';
@@ -47,7 +48,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
           return state.when(
             initial: () => const Center(child: CustomLoadingIndicator()),
             loading: () => const Center(child: CustomLoadingIndicator()),
-            loaded: (characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
+            loaded: (CharacterDetails characterDetails) => CharacterDetailsContent(characterDetails: characterDetails),
             error: (String message) => ErrorPage(
               helpingMessage: message,
               onRefresh: () async => context.read<CharacterDetailsBloc>().add(FetchCharacterDetailsEvent(characterId: widget.characterId)),

@@ -1,11 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mortygram/config/theme/data/datasource/local/theme_local_datasource.dart';
-import 'package:mortygram/config/theme/data/repository/theme_repo_impl.dart';
-import 'package:mortygram/config/theme/domain/repository/theme_repo.dart';
-import 'package:mortygram/config/theme/domain/usecase/get_theme_usecase.dart';
-import 'package:mortygram/config/theme/domain/usecase/set_theme_usecase.dart';
-import 'package:mortygram/config/theme/presentation/bloc/theme_bloc.dart';
+import 'package:mortygram/config/theme/presentation/cubit/theme_cubit.dart';
 import 'package:mortygram/core/common/envs/app_envs.dart';
 import 'package:mortygram/core/database/app_database.dart';
 import 'package:mortygram/core/services/interceptor/error_interceptor.dart';
@@ -24,17 +19,7 @@ import 'package:mortygram/features/characters/domain/repos/characters_repo.dart'
 import 'package:mortygram/features/characters/domain/usecases/get_characters.dart';
 import 'package:mortygram/features/characters/presentation/bloc/characters_bloc.dart';
 import 'package:mortygram/features/episodes/data/datasource/remote/episodes_remote_data_source.dart';
-import 'package:mortygram/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
-import 'package:mortygram/features/on_boarding/data/repos/on_boarding_repo_impl.dart';
-import 'package:mortygram/features/on_boarding/domain/repos/on_boarding_repo.dart';
-import 'package:mortygram/features/on_boarding/domain/usecases/cache_first_timer.dart';
-import 'package:mortygram/features/on_boarding/domain/usecases/check_first_timer.dart';
 import 'package:mortygram/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
-import 'package:mortygram/features/translations/data/datasources/translations_local_data_source.dart';
-import 'package:mortygram/features/translations/data/repos/translations_repo_impl.dart';
-import 'package:mortygram/features/translations/domain/repos/translations_repo.dart';
-import 'package:mortygram/features/translations/domain/usecases/cache_selected_language.dart';
-import 'package:mortygram/features/translations/domain/usecases/get_cached_selected_language.dart';
 import 'package:mortygram/features/translations/presentation/cubit/translations_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -18,6 +18,7 @@ class GetCharacters extends UseCaseWithParams<PaginatedResults<Character>, GetCh
       keyword: params.filters.keyword,
       genderFilter: params.filters.gender,
       statusFilter: params.filters.status,
+      isRefresh: params.isRefresh,
     );
   }
 }
@@ -25,12 +26,14 @@ class GetCharacters extends UseCaseWithParams<PaginatedResults<Character>, GetCh
 class GetCharactersParams extends Equatable {
   const GetCharactersParams({
     required this.page,
+    this.isRefresh,
     this.filters = const CharacterSearchFilters(),
   });
 
   final CharacterSearchFilters filters;
   final int page;
+  final bool? isRefresh;
 
   @override
-  List<Object?> get props => <Object?>[page, filters];
+  List<Object?> get props => <Object?>[page, filters, isRefresh];
 }

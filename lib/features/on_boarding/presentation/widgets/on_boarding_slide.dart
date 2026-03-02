@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
-import 'package:mortygram/features/on_boarding/domain/entities/on_boarding_data.dart';
+import 'package:mortygram/features/on_boarding/presentation/models/on_boarding_data.dart';
 
 class OnBoardingSlide extends StatelessWidget {
   const OnBoardingSlide({required this.data, required this.index, super.key});

@@ -34,23 +34,11 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<AppDatabase>(() => AppDatabase())
     ..registerLazySingleton<Dio>(() => dio)
     // * Translations
-    ..registerFactory(() => TranslationsCubit(cacheSelectedLanguage: sl(), getCachedSelectedLanguage: sl()))
-    ..registerLazySingleton(() => CacheSelectedLanguage(sl()))
-    ..registerLazySingleton(() => GetCachedSelectedLanguage(sl()))
-    ..registerLazySingleton<TranslationsRepo>(() => TranslationsRepoImpl(sl()))
-    ..registerLazySingleton<TranslationsLocalDataSource>(() => TranslationsLocalDataSourceImpl(sl()))
+    ..registerLazySingleton(() => TranslationsCubit())
     // * Theme
-    ..registerFactory(() => ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()))
-    ..registerLazySingleton(() => GetThemeUseCase(sl()))
-    ..registerLazySingleton(() => SetThemeUseCase(sl()))
-    ..registerLazySingleton<ThemeRepository>(() => ThemeRepositoryImpl(themeLocalDatasource: sl()))
-    ..registerLazySingleton<ThemeLocalDataSource>(() => ThemeLocalDatasourceImpl(sl()))
+    ..registerLazySingleton(() => ThemeCubit())
     // * On boarding
-    ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
-    ..registerLazySingleton(() => CacheFirstTimer(sl()))
-    ..registerLazySingleton(() => CheckFirstTimer(sl()))
-    ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
-    ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
+    ..registerLazySingleton(() => OnBoardingCubit())
     // * Characters
     ..registerFactory(() => CharactersBloc(getCharacters: sl()))
     ..registerLazySingleton(() => GetCharacters(sl()))

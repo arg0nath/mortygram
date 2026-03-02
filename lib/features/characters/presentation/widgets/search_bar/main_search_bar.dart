@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mortygram/core/common/extensions/context_ext.dart';
@@ -19,8 +17,6 @@ class MainSearchBar extends StatefulWidget {
 class _MainSearchBarState extends State<MainSearchBar> {
   late TextEditingController textEditingController;
 
-  Timer? _debounce;
-
   @override
   void initState() {
     super.initState();
@@ -30,18 +26,22 @@ class _MainSearchBarState extends State<MainSearchBar> {
   @override
   void dispose() {
     textEditingController.dispose();
-    _debounce?.cancel();
+
     super.dispose();
   }
 
   void _onSearchChanged(String query) {
-    // Cancel previous timer
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    final trimmed = query.trim();
+    widget.onSearch(trimmed.isNotEmpty ? trimmed : null);
+  }
 
-    // Start new timer (800ms delay to reduce API calls)
-    _debounce = Timer(const Duration(milliseconds: 800), () {
-      widget.onSearch(query.isEmpty ? null : query);
-    });
+  void _onSearchCleared() {
+    final hadValidText = textEditingController.text.trim().isNotEmpty;
+    textEditingController.clear();
+    if (hadValidText) {
+      widget.onSearch(null);
+    }
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -59,16 +59,13 @@ class _MainSearchBarState extends State<MainSearchBar> {
           icon: const Icon(Icons.search_rounded),
           onPressed: () {
             FocusScope.of(context).unfocus();
-            textEditingController.text.isNotEmpty ? _onSearchChanged(textEditingController.text) : null;
+            textEditingController.text.trim().isNotEmpty ? _onSearchChanged(textEditingController.text) : null;
           },
         ),
         prefixIcon: textEditingController.value.text.isEmpty
             ? null
             : GestureDetector(
-                onTap: () {
-                  textEditingController.clear();
-                  widget.onSearch(null);
-                },
+                onTap: _onSearchCleared,
                 child: const Icon(Icons.clear_rounded),
               ),
       ),

@@ -18,7 +18,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     on<InitialCharactersEvent>(_onInitial);
     on<FetchCharactersEvent>(
       _onFetchCharactersHandler,
-      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).asyncExpand(mapper), //debounce for search input
+      transformer: (Stream<FetchCharactersEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).switchMap(mapper), //debounce for search input
     );
     on<LoadMoreCharactersEvent>(_onLoadMoreHandler);
     on<RefreshCharactersEvent>(_onRefreshHandler);
@@ -33,7 +33,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     _pageCache.clear();
     state.maybeWhen(
       loaded: (_, _, _, _, _, CharacterSearchFilters activeFilters) {
-        add(FetchCharactersEvent(page: 1, filters: activeFilters));
+        add(FetchCharactersEvent(page: 1, filters: activeFilters, isRefresh: true));
       },
       orElse: () {
         add(const FetchCharactersEvent(page: 1));
@@ -64,7 +64,13 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
       emit(CharactersState.loading(isSearching: newFilters.keyword != null && newFilters.keyword!.isNotEmpty, searchQuery: newFilters.keyword));
     }
 
-    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(GetCharactersParams(page: event.page, filters: newFilters));
+    final Either<Failure, PaginatedResults<Character>> result = await _getCharacters(
+      GetCharactersParams(
+        page: event.page,
+        isRefresh: event.isRefresh,
+        filters: newFilters,
+      ),
+    );
 
     result.fold(
       //! error handling
