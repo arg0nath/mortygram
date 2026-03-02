@@ -27,6 +27,7 @@ lib/
 ```
 
 ### Key Architectural Patterns:
+- **Flutter Version**: Latest stable version of Flutter & Dart
 - **BLoC Pattern**: State management using flutter_bloc
 - **Repository Pattern**: Data layer abstraction
 - **Dependency Injection**: Using GetIt for service location
