@@ -19,7 +19,7 @@ Future<void> injectionInit() async {
 
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: AppEnvs.baseUrl,
+      baseUrl: AppConst.baseUrl,
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
     ),

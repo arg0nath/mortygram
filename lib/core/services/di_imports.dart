@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mortygram/config/theme/presentation/cubit/theme_cubit.dart';
-import 'package:mortygram/core/common/envs/app_envs.dart';
+import 'package:mortygram/core/common/constants/app_const.dart';
 import 'package:mortygram/core/database/app_database.dart';
 import 'package:mortygram/core/services/interceptor/error_interceptor.dart';
 import 'package:mortygram/core/services/interceptor/logging_interceptor.dart';

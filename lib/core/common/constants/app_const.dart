@@ -5,6 +5,8 @@ class AppConst {
 
   static const String appName = 'Mortygram';
 
+  static const String baseUrl = 'https://rickandmortyapi.com/api';
+
   static const String charactersApiUrl = '/character';
   static const String characterDetailsApiUrl = '/character';
   static const String characterLocationApiUrl = '/location';
