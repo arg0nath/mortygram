@@ -83,7 +83,13 @@ class _CharactersPageState extends State<CharactersPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: _showScrollToTopButton ? ScrollToTopButton(scrollController: _scrollController) : null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: _showScrollToTopButton
+            ? Padding(
+                padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+                child: ScrollToTopButton(scrollController: _scrollController),
+              )
+            : null,
         body: RefreshIndicator(
           onRefresh: _handleRefresh,
           child: BlocConsumer<CharactersBloc, CharactersState>(

@@ -34,6 +34,7 @@ class ErrorInterceptor extends Interceptor {
         error: errorMessage,
         message: errorMessage,
       ),
+      
     );
   }
 }

@@ -41,8 +41,17 @@ final GoRouter router = GoRouter(
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navShell) => Scaffold(
-        body: navShell,
-        bottomNavigationBar: MainAppBottomBar(navigationShell: navShell),
+        body: Stack(
+          children: <Widget>[
+            navShell,
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: MainAppBottomBar(navigationShell: navShell),
+            ),
+          ],
+        ),
       ),
       branches: <StatefulShellBranch>[
         StatefulShellBranch(

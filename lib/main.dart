@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mortygram/core/common/constants/app_const.dart';
-import 'package:mortygram/core/common/envs/app_envs.dart';
 import 'package:mortygram/core/common/res/app_assets.dart';
 import 'package:mortygram/core/common/utils/bloc_observer.dart';
 import 'package:mortygram/core/services/di_imports.dart';
@@ -16,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  await AppEnvs.init();
+  // await AppEnvs.init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // Initialize HydratedBloc storage
